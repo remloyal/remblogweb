@@ -1,0 +1,101 @@
+.header {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  top: 0;
+  left: 0;
+  .image {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+}
+
+// 菜单栏
+.menu {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  top: 0;
+  // color: white;.
+  z-index: 1;
+  .menu-fare > div {
+    padding-right: 16px;
+  }
+}
+.menu-left{
+  position: absolute;
+  top: 16px;
+  left: 20px;
+}
+.menu-right{
+  position: absolute;
+  top: 16px;
+  right: 60px;
+  display: flex;
+  .suspend{
+    margin-right: 14px;
+  }
+}
+
+
+.suspend .anticon {
+  padding-right: 6px;
+  color: black;
+  font-size: 14px;
+}
+
+.suspend::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #003cff;
+  transition: all 0.1s ease-in-out;
+}
+
+.suspend:hover::after {
+  width: 100%;
+}
+
+.ant-space-item::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #003cff;
+  transition: all 0.2s ease-in-out;
+}
+
+.ant-space-item:hover::after {
+  width: 100%;
+}
+
+.suspend:hover {
+  color: rgb(252, 112, 112) !important;
+}
+
+// 头部中间
+.site-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 30%;
+  width: 50%;
+  margin: 0 0 0 -25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    border-radius: 50%;
+  }
+  div {
+    font-size: 1em;
+    color: white;
+  }
+}
