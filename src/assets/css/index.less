@@ -55,6 +55,7 @@
   }
   .item {
     // width: 300px;
+    width: 60%;
     display: flex;
     background-color: var(--preloader-bg);
     border-radius: 10px;
@@ -67,8 +68,14 @@
     // overflow: hidden;
     // height: 18em;
   }
+  .item-left {
+    flex-direction: row-reverse;
+    .post_cover {
+      width: 47%;
+    }
+  }
   .post_cover {
-    width: 34%;
+    // width: 34%;
     height: 100%;
     img {
       border-radius: 10px 0 0 10px;

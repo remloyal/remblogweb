@@ -18,7 +18,10 @@
     "jsx": "react-jsx",
     "noImplicitAny": false,
     "listEmittedFiles": true, // 打印输出文件
-    "listFiles": true// 打印
+    "listFiles": true,// 打印
+    "paths": {
+      "@/*": ["./src/*"],
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -29,34 +29,13 @@ const data = [
   },
 ];
 
-const Lists = () => (
-  <>
+const Lists = () => {
+  const className = 'item'
+  return <>
     <div className="home-list">
-      {/* <List
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={(item, index) => (
-          <List.Item
-          >
-            <div className='item'>
-              <div className='post_cover'>
-                <img
-                  src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                />
-              </div>
-              <div className='home-post-info'>
-                <div>{item.title}</div>
-                <div>{item.title}</div>
-                <div>{item.title}</div>
-              </div>
-            </div>
-          </List.Item>
-        )}
-        
-      /> */}
       {
-        data.map(item => {
-          return <div className='item'>
+        data.map((item, index) => {
+          return <div key={index} className={(index % 2) === 0 ? className : className + ' item-left'}>
             <div className='post_cover'>
               <img
                 src="/src/assets/image/002bd8ca60ffa5048f3c9ede5e0f0bf9.jpg"
@@ -72,7 +51,7 @@ const Lists = () => (
       }
     </div>
   </>
-)
+}
 
 const Aside = () => {
   return <>
