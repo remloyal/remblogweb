@@ -10,6 +10,3 @@ function App() {
 }
 
 export default App;
-
-
-// npm config set prefix "F:\toolApp\node\node_global"y

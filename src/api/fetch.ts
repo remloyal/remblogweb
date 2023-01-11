@@ -3,7 +3,7 @@
  * 请求拦截、相应拦截、错误统一处理
  */
 import axios from "axios";
-import QS from "qs";
+// import QS from "qs";
 import { message } from "antd";
 
 // 环境的切换
@@ -102,7 +102,7 @@ axios.interceptors.response.use(
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-function get(url, params?) {
+function get(url: string, params?: undefined) {
   return new Promise((resolve, reject) => {
     axios
       .get(baseURL + url, {
@@ -121,10 +121,10 @@ function get(url, params?) {
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-function post(url, params) {
+function post(url: string, params: any) {
   return new Promise((resolve, reject) => {
     axios
-      .post(baseURL + url, QS.stringify(params))
+      .post(baseURL + url, { params })
       .then((res) => {
         resolve(res.data);
       })
