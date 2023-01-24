@@ -34,7 +34,7 @@ const routeConfig = [
     ]
   },
   {
-    path: '/Admin',
+    path: '/admin',
     element: <Admin />
   },
   {
@@ -50,6 +50,7 @@ const routeConfig = [
     //    ]
   }
 ]
+
 const Routes = () => (
   useRoutes(routeConfig)
 )

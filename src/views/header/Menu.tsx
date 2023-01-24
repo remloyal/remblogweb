@@ -127,12 +127,12 @@ const MenuBar: React.FC = (props) => {
   // <Button type="link" block>
   //   Link
   // </Button>
-  const [state,setState] = useState(false)
+  const [state, setState] = useState(false)
   // const onSwitch = (e) => {
   //   console.log(e);
   //   // document.documentElement.setAttribute('class', e ? 'dark' : 'light')
   //   localStorage.setItem('theme', e ? 'dark' : 'light')
-    
+
   // }
   // useEffect(() => {
   //   console.log(localStorage.getItem('theme'));

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { atom, useRecoilState } from "recoil";
+import { atom, useRecoilState, selector } from "recoil";
 
 // 窗口大小
-export const windowSize = atom({
+export const windowSize = selector({
   key: "windowSize",
-  default: (async () => {
+  get: ({ get }) => {
     // const res: any = await getProductList()
     // return res.data.products
     const getWindowSize = () => ({
@@ -15,14 +15,18 @@ export const windowSize = atom({
     const handleResize = () => {
       setWindowSize(getWindowSize());
     };
+    console.log(windowSize);
+
     useEffect(() => {
       // 监听
+      console.log(6666666);
+
       window.addEventListener("resize", handleResize);
       // 销毁
-      return () => window.removeEventListener("resize", handleResize);
-    });
+      // return () => window.removeEventListener("resize", handleResize);
+    }, []);
     return windowSize;
-  })(), // 返回 promise
+  }, // 返回 promise
 });
 
 // 购物车 state
@@ -32,7 +36,7 @@ export const cartAtom = atom({
 });
 
 // 订单 state
-export const orderAtom = atom({
-  key: "orderState",
-  default: [],
+export const windowSizes = atom({
+  key: "windowSizes",
+  default: {},
 });
