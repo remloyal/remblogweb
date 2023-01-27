@@ -1,11 +1,10 @@
 
-import { Image, Divider, List, Typography, Avatar } from 'antd';
+import { Image, Divider, List, Typography, Avatar, Pagination, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import './main.less'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { windowSizes } from '../../stores/atom'
-import { FolderOpenOutlined, MessageOutlined, AliwangwangOutlined, CarryOutOutlined } from '@ant-design/icons'
-
+import { FolderOpenOutlined, MessageOutlined, AliwangwangOutlined, CarryOutOutlined, PoweroffOutlined } from '@ant-design/icons'
 const data = [
   {
     title: 'Ant Design Title',
@@ -31,11 +30,17 @@ const data = [
     time: '2022-11-04',
     brief: "nt Design Title   nt Design Title"
   },
+  {
+    title: 'Ant Design Title 4',
+    context: '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！',
+    time: '2022-11-04',
+    brief: "nt Design Title   nt Design Title"
+  },
 ];
 
 
-const Lists = () => {
-  const className = 'item'
+const Lists = ({ hover }) => {
+  const className = 'item' + (hover ? ' item-hover' : '')
   return <>
     <div className="home-list">
       {
@@ -76,6 +81,7 @@ const Lists = () => {
         })
       }
     </div>
+    <Pagination defaultCurrent={1} total={50} />
   </>
 }
 
@@ -83,7 +89,10 @@ const Aside = () => {
   // const [text, setText] = useRecoilState(windowSize);
   return <>
     <div className="home-aside">
-      111111111111
+      <div></div>
+      <div></div>
+      <Button type="primary" icon={<PoweroffOutlined />}>Primary Button</Button>
+      <div></div>
       {/* <div>{count}</div> */}
     </div>
   </>
@@ -93,8 +102,8 @@ const Aside = () => {
 const Index = () => {
   const [windowSize, setWindowSize] = useRecoilState(windowSizes);
   return <>
-    <div className={'home ' + (windowSize.width > 700 ? 'home-pc' : 'home-move')}>
-      <Lists />
+    <div className={'home ' + (windowSize.width > 900 ? 'home-pc' : 'home-move')}>
+      <Lists hover={windowSize.width > 900 ? true : false} />
       <Aside />
     </div>
   </>

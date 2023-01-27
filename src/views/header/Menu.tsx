@@ -1,10 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import type { MenuProps } from 'antd';
+import { Drawer, MenuProps } from 'antd';
 import { Dropdown, Space, Avatar, Button, Switch } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined, DownOutlined, StepForwardOutlined, AntDesignOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { IconFont } from '../../components/icons';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { windowSizes } from '../../stores/atom'
+import { useRecoilState } from 'recoil';
 
 const items: MenuProps['items'] = [
   {
@@ -79,22 +81,7 @@ const itemMenu: MenuProps['items'] = [
 ];
 
 const Menus: React.FC = () => {
-  // 监听窗口变化
-  const getWindowSize = () => ({
-    innerHeight: window.innerHeight,
-    innerWidth: window.innerWidth,
-  });
-  const [windowSize, setWindowSize] = useState(getWindowSize());
-  const handleResize = () => {
-    setWindowSize(getWindowSize());
-  };
-  useEffect(() => {
-    // 监听
-    window.addEventListener("resize", handleResize);
-    // 销毁
-    return () => window.removeEventListener("resize", handleResize);
-  });
-
+  const [windowSize, setWindowSize] = useRecoilState(windowSizes);
   const [current, setCurrent] = useState('mail');
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
@@ -103,7 +90,7 @@ const Menus: React.FC = () => {
 
   return <div className='menu'>
     <div className='menu-left'>
-      个人网站<span>{windowSize.innerWidth}</span></div>
+      个人网站<span>{windowSize.width}</span></div>
     <div className='menu-right'>
       {/* <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} /> */}
       {/* <div className='suspend'><StepForwardOutlined />首页</div>
@@ -117,7 +104,7 @@ const Menus: React.FC = () => {
                     </Space>
                 </a>
             </Dropdown> */}
-      <MenuBar innerWidth={windowSize.innerWidth} />
+      <MenuBar innerWidth={windowSize.width} />
     </div>
   </div>
 }
@@ -139,8 +126,8 @@ const MenuBar: React.FC = (props) => {
   //   setState(localStorage.getItem('theme') == 'dark' ? true : false)
   //   onSwitch(localStorage.getItem('theme') == 'dark' ? true : false)
   // }, [])
-
-  if (innerWidth > 700) {
+  const [open, setOpen] = useState(false);
+  if (innerWidth > 900) {
     return <>
       <div className='suspend'><IconFont type="blog-sousuo" />搜索</div>
       <div className='suspend'><IconFont type="blog-zhuye1" />首页</div>
@@ -164,11 +151,25 @@ const MenuBar: React.FC = (props) => {
         />
       </div> */}
     </>
+  } else {
+
+    return <>
+      <IconFont type="菜单栏" style={{ fontSize: '18px', color: '#000', marginRight: "1vw" }} />
+      <MenuFoldOutlined onClick={() => {
+        setOpen(true);
+      }} />
+      <Drawer title="Basic Drawer" placement="right" onClose={() => {
+        setOpen(false);
+      }} open={open}  closable={false}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
+    </>
   }
-  return <>
-    <IconFont type="blog-sousuo" style={{ fontSize: '18px', color: '#000', marginRight: "1vw" }} />
-    <MenuFoldOutlined />
-  </>
+
+
+
 }
 
 export default Menus;
