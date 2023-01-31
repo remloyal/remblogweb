@@ -47,12 +47,9 @@ const Lists = ({ hover }) => {
         data.map((item, index) => {
           return <div key={index} className={(index % 2) === 0 ? className : className + ' item-left'}>
             <div className='post_cover'>
-              {/* <img
-                src="/src/assets/image/002bd8ca60ffa5048f3c9ede5e0f0bf9.jpg"
-              /> */}
               <Image
                 preview={false}
-                height={210}
+                // height={210}
                 width={'100%'}
                 src="/src/assets/image/002bd8ca60ffa5048f3c9ede5e0f0bf9.jpg"
               />
@@ -80,22 +77,54 @@ const Lists = ({ hover }) => {
           </div>
         })
       }
+      <Pagination defaultCurrent={1} total={50} />
     </div>
-    <Pagination defaultCurrent={1} total={50} />
   </>
 }
 
 const Aside = () => {
   // const [text, setText] = useRecoilState(windowSize);
-  return <>
-    <div className="home-aside">
+  return <div className="home-aside">
+    <div className='card-info'>
       <div></div>
       <div></div>
-      <Button type="primary" icon={<PoweroffOutlined />}>Primary Button</Button>
+
       <div></div>
       {/* <div>{count}</div> */}
+      <div className="card-widget card-info">
+        <div className="is-center">
+          <div className="avatar-img">
+            <img src="/img/friend_404.gif" alt="avatar" />
+          </div>
+          <div className="author-info__name">YaYa</div><div className="author-info__description">YaYa</div>
+        </div><div className="card-info-data site-data is-center">
+          <a href="/archives/">
+            <div className="headline">文章</div>
+            <div className="length-num">3</div>
+          </a>
+          <a href="/tags/">
+            <div className="headline">标签</div>
+            <div className="length-num">1</div>
+          </a>
+          <a href="/categories/">
+            <div className="headline">分类</div>
+            <div className="length-num">1</div>
+          </a>
+        </div>
+        <a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/remloyal">
+          <Button type="primary" icon={<PoweroffOutlined />}>Primary Button</Button>
+        </a>
+        <div className="card-info-social-icons is-center">
+          <a className="social-icon" href="https://github.com/remloyal" target="_blank" title="Github">
+            <i className="fab fa-github"></i>
+          </a>
+          <a className="social-icon" href="mailto:1182387960@qq.com" target="_blank" title="Email">
+            <i className="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
     </div>
-  </>
+  </div>
 }
 
 

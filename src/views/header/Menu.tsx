@@ -90,7 +90,7 @@ const Menus: React.FC = () => {
 
   return <div className='menu'>
     <div className='menu-left'>
-      个人网站<span>{windowSize.width}</span></div>
+      网站<span>{windowSize.width}</span></div>
     <div className='menu-right'>
       {/* <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} /> */}
       {/* <div className='suspend'><StepForwardOutlined />首页</div>
