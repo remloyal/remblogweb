@@ -1,18 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import 'antd/dist/reset.css';
-import './App.css';
-import './assets/font/iconfont.css';
-import './assets/css/index.less';
-import { startSakura } from './components/fullScreenFlower';
-import { RecoilRoot } from 'recoil';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "antd/dist/reset.css";
+import "./App.css";
+import "./assets/font/iconfont.css";
+import "./assets/css/index.less";
+import { startSakura } from "./components/fullScreenFlower";
+import { RecoilRoot } from "recoil";
+import "./index.css";
 // startSakura();
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
       <App />
     </RecoilRoot>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
