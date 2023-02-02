@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Drawer, MenuProps } from 'antd';
 import { Dropdown, Space, Avatar, Button, Switch } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined, DownOutlined, StepForwardOutlined, AntDesignOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import { IconFont } from '../../components/icons';
+import { IconFont } from '../../../components/icons';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { windowSizes } from '../../stores/atom'
+import { windowSizes } from '../../../stores/atom'
 import { useRecoilState } from 'recoil';
 
 const items: MenuProps['items'] = [

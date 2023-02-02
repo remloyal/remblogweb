@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getImg } from '../../api/image'
+import { getImg } from '../../../api/image'
 
 const Picture: React.FC = () => {
   const [image, setImage] = useState('');

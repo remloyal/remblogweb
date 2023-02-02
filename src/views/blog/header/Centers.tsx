@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Image, Space, Avatar } from 'antd';
 import { AntDesignOutlined } from '@ant-design/icons';
-import { getImg } from '../../api/image'
+import { getImg } from '../../../api/image'
 
 const Center: React.FC = () => {
   const [ imgurl, setImgurl ] = useState<any>('')

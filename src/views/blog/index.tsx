@@ -1,10 +1,10 @@
 
 import Footer from "./Footer";
-import Header from "../header/header";
+import Header from "./header/header";
 import Main from "./main";
 import Float from "./Float";
 import { ConfigProvider, Button, theme ,FloatButton } from 'antd';
-import Menu from "../header/Menu";
+import Menu from "./header/Menu";
 import { Outlet } from "react-router-dom";
 import Snowflake from '../../components/specialEffects/snowflake'
 

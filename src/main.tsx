@@ -8,6 +8,7 @@ import "./assets/css/index.less";
 import { startSakura } from "./components/fullScreenFlower";
 import { RecoilRoot } from "recoil";
 import "./index.css";
+import "./views/views.less";
 // startSakura();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

@@ -1,7 +1,6 @@
 
 import { useRoutes } from "react-router-dom"
 
-import Home from "../views/Home"
 import List from "../views/List"
 import Layout from "../views/Layout"
 
@@ -9,14 +8,26 @@ import Admin from "../views/admin/admin"
 import Index from "../views/blog"
 import { lazy } from "react"
 // React 组件懒加载
-const Indexs = lazy(() => import('../views/main/Index'));
-const Details = lazy(() => import('../views/main/Details'));
-const Tag = lazy(() => import('../views/main/Tag'));
+const Indexs = lazy(() => import('../views/blog/main/Index'));
+const Details = lazy(() => import('../views/blog/main/Details'));
+const Tag = lazy(() => import('../views/blog/main/Tag'));
+const Login = lazy(() => import('@/views/Login'));
+
+// 快速导入工具函数
+const lazyLoad = (moduleName: string) => {
+  const path = `../views/${moduleName}`
+  const Module = lazy(() => import(path));
+  console.log(Module);
+  
+  return (
+    <Module />
+  )
+};
 
 const routeConfig = [
   {
     path: '/',
-    element: <Index />,
+    element: lazyLoad('views/blog'),
     redirect: 'index',
     children: [
       {
@@ -48,6 +59,10 @@ const routeConfig = [
     //         { path: '/children/child1', element: <Child1/> },
     //      { path: '/children/child2', element: <Child2/>  }
     //    ]
+  },
+  {
+    path: '/login',
+    element: <Login />,
   }
 ]
 

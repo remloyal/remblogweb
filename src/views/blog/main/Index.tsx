@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import './main.less'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { windowSizes } from '../../stores/atom'
+import { windowSizes } from '../../../stores/atom'
 import {
   FolderOpenOutlined,
   MessageOutlined,
@@ -23,6 +23,7 @@ import {
   UserOutlined,
   StepForwardOutlined,
 } from '@ant-design/icons'
+
 const Index: React.FC = () => {
   const [windowSize, setWindowSize] = useRecoilState(windowSizes)
   return (
@@ -347,7 +348,7 @@ const LatestArticles: React.FC = () => {
                 <div>當設置 top_img 為 false 時</div>
                 <div>
                   <time
-                    datetime="2020-10-28T06:15:34.000Z"
+                    dateTime="2020-10-28T06:15:34.000Z"
                     title="發表於 2020-10-28 14:15:34"
                   >
                     2020-10-28
@@ -394,14 +395,21 @@ const WebsiteInformation: React.FC = () => {
           data.map((res, index) => {
             return (
               <Row className="webinfo-item" key={index}>
-                <Col span={8} className='left'>{res.name}</Col>
-                <Col span={8} offset={8} className='right'>
+                <Col span={10} className='left'>{res.name}</Col>
+                <Col span={8} offset={6} className='right'>
                   { res.unit ? (res.num + res.unit) : res.num}
                 </Col>
               </Row>
             )
           })
         }
+        <Row className="webinfo-item" >
+                <Col span={10} className='left' id="busuanzi_container_site_pv">本站总访问量</Col>
+                <Col span={8} offset={6} className='right' id="busuanzi_value_site_pv">
+                  
+                </Col>
+              </Row>
+        {/* <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> */}
     </div>
   )
 }
