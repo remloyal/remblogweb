@@ -16,9 +16,7 @@ const Login = lazy(() => import('@/views/Login'));
 // 快速导入工具函数
 const lazyLoad = (moduleName: string) => {
   const path = `../views/${moduleName}`
-  const Module = lazy(() => import(path));
-  console.log(Module);
-  
+  const Module = lazy(() => import(path));  
   return (
     <Module />
   )
@@ -27,7 +25,7 @@ const lazyLoad = (moduleName: string) => {
 const routeConfig = [
   {
     path: '/',
-    element: lazyLoad('views/blog'),
+    element: <Index />,
     redirect: 'index',
     children: [
       {
