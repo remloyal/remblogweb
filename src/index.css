@@ -75,6 +75,7 @@ input {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   --text-clolor: black;
+  --text-hover-clolor: rgb(255, 0, 0);
   --post_date_text_color: #ffcc00;
   --aside-bg-color: #ececec;
   --hover-color:rgb(47, 255, 117);

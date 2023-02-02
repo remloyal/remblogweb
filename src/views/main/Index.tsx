@@ -7,11 +7,13 @@ import {
   Pagination,
   Button,
   Tooltip,
-} from "antd";
-import React, { useEffect, useState } from "react";
-import "./main.less";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { windowSizes } from "../../stores/atom";
+  Col,
+  Row,
+} from 'antd'
+import React, { useEffect, useState } from 'react'
+import './main.less'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { windowSizes } from '../../stores/atom'
 import {
   FolderOpenOutlined,
   MessageOutlined,
@@ -20,59 +22,59 @@ import {
   PoweroffOutlined,
   UserOutlined,
   StepForwardOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons'
 const Index: React.FC = () => {
-  const [windowSize, setWindowSize] = useRecoilState(windowSizes);
+  const [windowSize, setWindowSize] = useRecoilState(windowSizes)
   return (
     <>
       <div
-        className={"home " + (windowSize.width > 900 ? "home-pc" : "home-move")}
+        className={'home ' + (windowSize.width > 900 ? 'home-pc' : 'home-move')}
       >
         <Lists hover={windowSize.width > 900 ? true : false} />
         <Aside />
       </div>
     </>
-  );
-};
+  )
+}
 const data = [
   {
-    title: "Ant Design Title",
+    title: 'Ant Design Title',
     context:
-      "欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！",
-    time: "2022-11-04",
-    brief: "nt Design Title   nt Design Title",
+      '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！',
+    time: '2022-11-04',
+    brief: 'nt Design Title   nt Design Title',
   },
   {
-    title: "Ant Design Title 2",
+    title: 'Ant Design Title 2',
     context:
-      "欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！",
-    time: "2022-11-04",
-    brief: "nt Design Title   nt Design Title",
+      '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！',
+    time: '2022-11-04',
+    brief: 'nt Design Title   nt Design Title',
   },
   {
-    title: "Ant Design Title 3",
-    context: "nt Design Title",
-    time: "2022-11-04",
-    brief: "nt Design Title   nt Design Title",
+    title: 'Ant Design Title 3',
+    context: 'nt Design Title',
+    time: '2022-11-04',
+    brief: 'nt Design Title   nt Design Title',
   },
   {
-    title: "Ant Design Title 4",
+    title: 'Ant Design Title 4',
     context:
-      "欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！",
-    time: "2022-11-04",
-    brief: "nt Design Title   nt Design Title",
+      '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！',
+    time: '2022-11-04',
+    brief: 'nt Design Title   nt Design Title',
   },
   {
-    title: "Ant Design Title 4",
+    title: 'Ant Design Title 4',
     context:
-      "欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！",
-    time: "2022-11-04",
-    brief: "nt Design Title   nt Design Title",
+      '欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！欢迎使用WordPress。这是您的第一篇文章。编辑或删除它，然后开始写作吧！',
+    time: '2022-11-04',
+    brief: 'nt Design Title   nt Design Title',
   },
-];
+]
 
 const Lists: React.FC = ({ hover }) => {
-  const className = "item" + (hover ? " item-hover" : "");
+  const className = 'item' + (hover ? ' item-hover' : '')
   return (
     <>
       <div className="home-list">
@@ -80,13 +82,13 @@ const Lists: React.FC = ({ hover }) => {
           return (
             <div
               key={index}
-              className={index % 2 === 0 ? className : className + " item-left"}
+              className={index % 2 === 0 ? className : className + ' item-left'}
             >
               <div className="post_cover">
                 <Image
                   preview={false}
                   // height={210}
-                  width={"100%"}
+                  width={'100%'}
                   src="/src/assets/image/002bd8ca60ffa5048f3c9ede5e0f0bf9.jpg"
                 />
               </div>
@@ -98,41 +100,41 @@ const Lists: React.FC = ({ hover }) => {
                 <div className="post-title">表提</div>
                 <div className="post-meta">
                   <span>
-                    <FolderOpenOutlined style={{ color: "#ffcc00" }} />
+                    <FolderOpenOutlined style={{ color: '#ffcc00' }} />
                     <a href="https://yaya.loveyl.cc/web/">web </a>
                   </span>
                   <span>
-                    <AliwangwangOutlined style={{ color: "#ffcc00" }} />
+                    <AliwangwangOutlined style={{ color: '#ffcc00' }} />
                     122 热度
                   </span>
                   <span className="comments-number">
-                    <MessageOutlined style={{ color: "#ffcc00" }} />
+                    <MessageOutlined style={{ color: '#ffcc00' }} />
                     <a href="https://yaya.loveyl.cc/index.php/2022/04/01/html2canvas-%e5%9b%be%e7%89%87%e8%b7%a8%e5%9f%9f%e4%b8%8e%e6%88%aa%e5%8f%96%e9%ab%98%e5%be%b7%e5%9c%b0%e5%9b%be/#comments">
                       1 评论
-                    </a>{" "}
+                    </a>{' '}
                   </span>
                 </div>
                 <div className="post-content">{item.context}</div>
               </div>
             </div>
-          );
+          )
         })}
         <Pagination defaultCurrent={1} total={50} />
       </div>
     </>
-  );
-};
+  )
+}
 
-const Aside: React.FC = () => {
+export const Aside: React.FC = () => {
   // const [text, setText] = useRecoilState(windowSize);
   return (
     <div className="home-aside">
       <div className="card-info">
         <div className="is-center">
           <Avatar
-            size={120}
+            size={80}
             icon={<UserOutlined />}
-            src={"/src/assets/image/002bd8ca60ffa5048f3c9ede5e0f0bf9.jpg"}
+            src={'/src/assets/image/002bd8ca60ffa5048f3c9ede5e0f0bf9.jpg'}
           />
           {/* 名称 */}
           <div className="author-info__name">YaYa</div>
@@ -169,7 +171,7 @@ const Aside: React.FC = () => {
               <Tooltip
                 key={index}
                 title={() => {
-                  return <span className="card-info-tooltip">{res}</span>;
+                  return <span className="card-info-tooltip">{res}</span>
                 }}
                 destroyTooltipOnHide={true}
               >
@@ -179,40 +181,41 @@ const Aside: React.FC = () => {
                   target="_blank"
                   title="Github"
                 >
-                  <StepForwardOutlined style={{ fontSize: "24px" }} />
+                  <StepForwardOutlined style={{ fontSize: '24px' }} />
                 </a>
               </Tooltip>
-            );
+            )
           })}
         </div>
       </div>
       <Notice />
       <DocumentDirectory />
       <LatestArticles />
+      <WebsiteInformation />
     </div>
-  );
-};
+  )
+}
 
 const Notice: React.FC = () => {
   return (
-    <div className="card-announcement">
+    <div className="card-announcement card-widget">
       <div className="item-headline">
-        <StepForwardOutlined style={{ fontSize: "24px", color: "red" }} />
+        <StepForwardOutlined style={{ fontSize: '24px', color: 'red' }} />
         <span>公告</span>
       </div>
       <div className="announcement_content">
-        如果你在使用中遇到問題，請到{" "}
+        如果你在使用中遇到問題，請到{' '}
         <a
           target="_blank"
           rel="noopener external nofollow noreferrer"
           href="https://github.com/jerryc127/hexo-theme-butterfly/issues"
         >
           Github Issues
-        </a>{" "}
-        或者{" "}
+        </a>{' '}
+        或者{' '}
         <a href="/messageboard/" data-pjax-state="">
           留言板
-        </a>{" "}
+        </a>{' '}
         進行反饋，你也可以加入 QQ 群（由於 QQ 群只能有 500
         人，會定時清理潛水的人，不要同時申請 2 个 QQ 群）
         {/* <div className="social-button">
@@ -243,15 +246,15 @@ const Notice: React.FC = () => {
         </div> */}
       </div>
     </div>
-  );
-};
+  )
+}
 
 // 文章目录
 const DocumentDirectory: React.FC = () => {
   return (
-    <div className="card-docs">
+    <div className="card-docs card-widget">
       <div className="item-headline">
-        <StepForwardOutlined style={{ fontSize: "24px", color: "red" }} />
+        <StepForwardOutlined style={{ fontSize: '24px', color: 'red' }} />
         <span>文檔目錄</span>
       </div>
       <div className="item-content">
@@ -322,14 +325,14 @@ const DocumentDirectory: React.FC = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 // 最新文章
 const LatestArticles: React.FC = () => {
   return (
-    <div className="card-recent-post">
+    <div className="card-recent-post card-widget">
       <div className="item-headline">
-        <StepForwardOutlined style={{ fontSize: "24px", color: "red" }} />
+        <StepForwardOutlined style={{ fontSize: '24px', color: 'red' }} />
         <span>最新文章</span>
       </div>
       <div className="item-content">
@@ -352,10 +355,54 @@ const LatestArticles: React.FC = () => {
                 </div>
               </div>
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
-};
-export default Index;
+  )
+}
+
+// 网站资讯
+const WebsiteInformation: React.FC = () => {
+  let data = [
+    {
+      name: '文章数目',
+      num: 0
+    },
+    {
+      name: '已运行时间',
+      num: 0,
+      unit: '天'
+    },
+    {
+      name: '本站访客数',
+      num: 0
+    },
+    {
+      name: '最后更新时间',
+      num: 0,
+      unit: '天'
+    }
+  ]
+  return (
+    <div className="card-widget card-webinfo">
+      <div className="item-headline">
+        <i className="fas fa-chart-line"></i>
+        <span>网站资讯</span>
+      </div>
+        {
+          data.map((res, index) => {
+            return (
+              <Row className="webinfo-item" key={index}>
+                <Col span={8} className='left'>{res.name}</Col>
+                <Col span={8} offset={8} className='right'>
+                  { res.unit ? (res.num + res.unit) : res.num}
+                </Col>
+              </Row>
+            )
+          })
+        }
+    </div>
+  )
+}
+export default Index
