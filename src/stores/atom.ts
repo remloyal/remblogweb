@@ -40,3 +40,23 @@ export const windowSizes = atom({
   key: "windowSizes",
   default: {},
 });
+
+export const routeTable = atom({
+  key: "routeTable",
+  default: {
+    tag: [],
+    tagPath:'',
+    router:''
+  },
+});
+
+export const routeTag = atom({
+  key: "routeTag",
+  default: []
+});
+
+export const routeTagData = atom({
+  key: "routeTagData",
+  default: [] as any
+});
+

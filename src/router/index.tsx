@@ -1,6 +1,7 @@
 
 import { useRoutes } from "react-router-dom"
 
+
 import List from "../views/List"
 import Layout from "../views/Layout"
 
@@ -13,14 +14,15 @@ const Details = lazy(() => import('../views/blog/main/Details'));
 const Tag = lazy(() => import('../views/blog/main/Tag'));
 const Login = lazy(() => import('@/views/Login'));
 
+import RouteConfig from "./admin"
 // 快速导入工具函数
-const lazyLoad = (moduleName: string) => {
-  const path = `../views/${moduleName}`
-  const Module = lazy(() => import(path));  
-  return (
-    <Module />
-  )
-};
+// const lazyLoad = (moduleName: string) => {
+//   const path = `../views/${moduleName}`
+//   const Module = lazy(() => import(path));  
+//   return (
+//     <Module />
+//   )
+// };
 
 const routeConfig = [
   {
@@ -44,7 +46,21 @@ const routeConfig = [
   },
   {
     path: '/admin',
-    element: <Admin />
+    element: <Admin />,
+    children: [
+      {
+        path: '',
+        element: <Indexs />,
+      },
+      {
+        path: 'details',
+        element: <Details />,
+      },
+      {
+        path: 'tag',
+        element: <Tag />,
+      },
+    ]
   },
   {
     path: '/list',
@@ -65,7 +81,7 @@ const routeConfig = [
 ]
 
 const Routes = () => (
-  useRoutes(routeConfig)
+  useRoutes(Object.assign(routeConfig,RouteConfig))
 )
 
 export default Routes

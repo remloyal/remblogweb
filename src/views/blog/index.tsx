@@ -6,7 +6,7 @@ import Float from "./Float";
 import { ConfigProvider, Button, theme ,FloatButton } from 'antd';
 import Menu from "./header/Menu";
 import { Outlet } from "react-router-dom";
-import Snowflake from '../../components/specialEffects/snowflake'
+// import Snowflake from '../../components/specialEffects/snowflake'
 
 const Index = () => {
     return <div className="blog">
