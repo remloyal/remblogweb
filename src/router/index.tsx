@@ -1,24 +1,22 @@
+import { useRoutes } from "react-router-dom";
 
-import { useRoutes } from "react-router-dom"
+import List from "../views/List";
+import Layout from "../views/Layout";
 
-
-import List from "../views/List"
-import Layout from "../views/Layout"
-
-import Admin from "../views/admin/admin"
-import Index from "../views/blog"
-import { lazy } from "react"
+import Admin from "../views/admin/admin";
+import Index from "../views/blog";
+import { lazy } from "react";
 // React 组件懒加载
-const Indexs = lazy(() => import('../views/blog/main/Index'));
-const Details = lazy(() => import('../views/blog/main/Details'));
-const Tag = lazy(() => import('../views/blog/main/Tag'));
-const Login = lazy(() => import('@/views/Login'));
+const Indexs = lazy(() => import("../views/blog/main/Index"));
+const Details = lazy(() => import("../views/blog/main/Details"));
+const Tag = lazy(() => import("../views/blog/main/Tag"));
+const Login = lazy(() => import("@/views/Login"));
 
-import RouteConfig from "./admin"
+import RouteConfig from "./admin";
 // 快速导入工具函数
 // const lazyLoad = (moduleName: string) => {
 //   const path = `../views/${moduleName}`
-//   const Module = lazy(() => import(path));  
+//   const Module = lazy(() => import(path));
 //   return (
 //     <Module />
 //   )
@@ -26,48 +24,30 @@ import RouteConfig from "./admin"
 
 const routeConfig = [
   {
-    path: '/',
+    path: "/",
     element: <Index />,
-    redirect: 'index',
+    redirect: "index",
     children: [
       {
-        path: '',
+        path: "",
         element: <Indexs />,
       },
       {
-        path: 'details',
+        path: "details",
         element: <Details />,
       },
       {
-        path: 'tag',
+        path: "tag",
         element: <Tag />,
       },
-    ]
+    ],
   },
   {
-    path: '/admin',
-    element: <Admin />,
-    children: [
-      {
-        path: '',
-        element: <Indexs />,
-      },
-      {
-        path: 'details',
-        element: <Details />,
-      },
-      {
-        path: 'tag',
-        element: <Tag />,
-      },
-    ]
+    path: "/list",
+    element: <List />,
   },
   {
-    path: '/list',
-    element: <List />
-  },
-  {
-    path: '/layout',
+    path: "/layout",
     element: <Layout />,
     //    children: [
     //         { path: '/children/child1', element: <Child1/> },
@@ -75,13 +55,14 @@ const routeConfig = [
     //    ]
   },
   {
-    path: '/login',
+    path: "/login",
     element: <Login />,
-  }
-]
+  },
+];
 
-const Routes = () => (
-  useRoutes(Object.assign(routeConfig,RouteConfig))
-)
+const Routes = () => {
+  let data = [...routeConfig, ...RouteConfig];
+  return useRoutes(data);
+};
 
-export default Routes
+export default Routes;
