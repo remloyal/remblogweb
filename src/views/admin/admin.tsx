@@ -24,9 +24,10 @@ import {
   useActionData,
 } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { routeTable, routeTag, routeTagData } from "@/stores/atom";
-
+import { routePath } from "@/stores/atom";
 type MenuItem = Required<MenuProps>["items"][number];
+import { MenuData } from '@/config/config'
+
 function getItem(
   label: React.ReactNode,
   key: React.Key,
@@ -44,16 +45,14 @@ function getItem(
 }
 
 const Admin: React.FC = () => {
-  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   const items: MenuItem[] = [
-    getItem("首页", "1", <PieChartOutlined />),
+    getItem("首页", "index", <PieChartOutlined />),
     getItem("Option 2", "2", <DesktopOutlined />),
     getItem("Option 3", "3", <ContainerOutlined />),
-
     getItem("错误页面", "sub1", <MailOutlined />, [
       getItem("403", "403"),
       getItem("404", "404"),
@@ -66,31 +65,63 @@ const Admin: React.FC = () => {
       getItem("Submenu", "sub3", null, [
         getItem("Option 11", "11"),
         getItem("Option 12", "12"),
+        getItem("Submenusub4", "sub4", null, [
+          getItem("Option 13", "13"),
+          getItem("Option 14", "14"),
+        ])
       ]),
     ]),
   ];
-  const [route, setRoute] = useRecoilState(routeTable);
-  const [tag, setTag] = useRecoilState(routeTag);
-  const [tagData, setTagData] = useRecoilState(routeTagData);
 
-  const onSelect = ({ item, key, keyPath, selectedKeys, domEvent }) => {
-    console.log({ item, key, keyPath, selectedKeys, domEvent });
-    navigate(key);
-    setTag(keyPath);
-    let data: string[] = [];
-    console.log(data);
-    tagData.forEach((res: string) => {
-      data.push(res);
-    });
-    data.push(key);
-    // data.push(key)
-    setTagData(data);
+  const [path, setPath] = useRecoilState(routePath);
+  const onSelect = ({ keyPath }) => {
+    // console.log({ item, key, keyPath, selectedKeys, domEvent });
+    // console.log(selectedKeys);
+    console.log(items);
+    let itemPath: MenuItem
+    const getPath = (indexKey, index) => {
+      if (itemPath?.children) {
+        itemPath = itemPath?.children.find(res => res.key == keyPath[keyPath.length - (index + 1)]);
+      } else {
+        itemPath = items.find(res => res.key == keyPath[keyPath.length - (index + 1)]);
+      }
+      console.log('itemPath', itemPath);
+    }
+    if (keyPath.length == 1) {
+      itemPath = items.find(res => res.key == keyPath[keyPath.length - 1]);
+    } else {
+      for (let index = 0; index < keyPath.length; index++) {
+        const indexKey = keyPath[keyPath.length - (index + 1)];
+        console.log(indexKey)
+        getPath(indexKey, index)
+      }
+    }
+
+    // itemPath.children && getPath()
+    itemPath && setPath({ type: 'add', data: itemPath })
+
+    // navigate(key);
+    // setTag(keyPath);
+    // let data: string[] = [];
+    // console.log(data);
+    // tagData.forEach((res: string) => {
+    //   data.push(res);
+    // });
+    // data.push(key);
+    // // data.push(key)
+    // setTagData(data);
   };
+  const onClick = (props: any) => {
+    setSelectedKeys([props.key])
+  }
   const [breadItem, setBreadItem] = useState([]);
+
   useEffect(() => {
-    let newPath = [...tag].reverse();
-    setBreadItem(newPath);
-  }, [tag]);
+    if (path.type == 'click') {
+      setSelectedKeys([path.data.key])
+    }
+  }, [path]);
+  const [selectedKeys, setSelectedKeys] = useState()
   return (
     <Layout className="admin">
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -98,9 +129,11 @@ const Admin: React.FC = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["index"]}
           items={items}
+          selectedKeys={selectedKeys}
           onSelect={onSelect}
+          onClick={onClick}
         />
       </Sider>
       <Layout className="site-layout">
@@ -154,50 +187,19 @@ const Admin: React.FC = () => {
 const Label: React.FC = () => {
   const navigate = useNavigate();
   type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
-  const defaultPanes = new Array(15).fill(null).map((_, index) => {
-    const id = String(index + 1);
-    return { label: `Tab Tab Tab ${id}`, key: id };
-  });
-  let params = useParams();
-  const [route, setRoute] = useRecoilState(routeTable);
-  const [tag, setTag] = useRecoilState(routeTag);
-  const [activeKey, setActiveKey] = useState(defaultPanes[0].key);
-  const [items, setItems] = useState(defaultPanes);
-  const newTabIndex = useRef(0);
-  const [tagData, setTagData] = useRecoilState(routeTagData);
-  useEffect(() => {
-    let data: { label: any; key: any }[] = getTagData();
-    console.log(params);
-    // var newArr = [];
-    // var arrId = [];
-    // tagData.forEach((element: any) => {
-    //   data.push({ label: element, key: element });
-    // });
-    // for (var item of data) {
-    //   if (arrId.indexOf(item["label"]) == -1) {
-    //     arrId.push(item["label"]);
-    //     newArr.push(item);
-    //   }
-    // }
-    setItems([...data]);
-  }, [tagData]);
+  const [items, setItems] = useState([{
+    label: '首页',
+    key: 'index'
+  }]);
 
-  // 更新最新Tag
-  const getTagData = () => {
-    let data: { label: any; key: any }[] = [];
-    var newArr = [];
-    var arrId = [];
-    tagData.forEach((element: any) => {
-      data.push({ label: element, key: element });
-    });
-    for (var item of data) {
-      if (arrId.indexOf(item["label"]) == -1) {
-        arrId.push(item["label"]);
-        newArr.push(item);
-      }
+  const [activeKey, setActiveKey] = useState(items[0].key);
+  const [path, setPath] = useRecoilState(routePath);
+  useEffect(() => {
+    if (path.type == 'add') {
+      add()
     }
-    return newArr;
-  };
+  }, [path]);
+
   const onChange = (key: string) => {
     setActiveKey(key);
   };
@@ -207,36 +209,38 @@ const Label: React.FC = () => {
     navigate(key);
   };
   const add = () => {
-    const newActiveKey = `newTab${newTabIndex.current++}`;
-    setItems([...items, { label: "New Tab", key: newActiveKey }]);
-    setActiveKey(newActiveKey);
+    let data = path.data;
+    let item = items.find(item => item.key == data.key);
+    if (!item) {
+      setItems([...items, { label: data.label, key: data.key }]);
+    }
+    setActiveKey(data.key);
   };
 
   const remove = (targetKey: TargetKey) => {
     const targetIndex = items.findIndex((pane) => pane.key === targetKey);
     const newPanes = items.filter((pane) => pane.key !== targetKey);
     if (newPanes.length && targetKey === activeKey) {
-      const { key } =
+      const tabItem =
         newPanes[
-          targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
+        targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
         ];
-      setActiveKey(key);
+      setActiveKey(tabItem.key);
+      console.log(tabItem);
+      setPath({ type: 'click', data: tabItem })
     }
     setItems(newPanes);
-    let keyData = JSON.parse(JSON.stringify(tagData));
-    let keyIndex = keyData.indexOf(targetKey);
-    var targeData = keyData.splice(keyIndex, 1);
-    setTagData(targeData);
+    console.log(newPanes);
   };
   const onEdit = (targetKey: TargetKey, action: "add" | "remove") => {
     console.log(targetKey);
-
     if (action === "add") {
       add();
     } else {
       remove(targetKey);
     }
   };
+  
   return (
     <>
       <Tabs

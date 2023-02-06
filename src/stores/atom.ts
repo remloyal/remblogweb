@@ -41,22 +41,10 @@ export const windowSizes = atom({
   default: {},
 });
 
-export const routeTable = atom({
-  key: "routeTable",
+export const routePath = atom({
+  key: "routePath",
   default: {
-    tag: [],
-    tagPath:'',
-    router:''
-  },
+    type: '',
+    data: null as any
+  }
 });
-
-export const routeTag = atom({
-  key: "routeTag",
-  default: []
-});
-
-export const routeTagData = atom({
-  key: "routeTagData",
-  default: [] as any
-});
-
