@@ -20,6 +20,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "suppressImplicitAnyIndexErrors":true,
   },
   "include": ["src/*", "src/**/*.vue", "src/**/*.tsx", "src/**/*.jsx", "src/**/*.ts", "src/**/*.js"],
   "references": [{ "path": "./tsconfig.node.json" }]

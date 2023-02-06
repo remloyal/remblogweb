@@ -1,4 +1,4 @@
 const Index = () => {
-  return <> <div className="element"> This is List page</div></>
+  return <> <div className="element"> This is Index page</div></>
 };
 export default Index;

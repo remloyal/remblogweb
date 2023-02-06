@@ -1,14 +1,12 @@
 import { useRoutes } from "react-router-dom";
-
-import List from "../views/List";
-import Layout from "../views/Layout";
-
 import Admin from "../views/admin/admin";
-import Index from "@/views/admin/index/Index";
-import { lazy } from "react";
+import React , { lazy } from "react";
 // React 组件懒加载
+const Index = lazy(() => import("@/views/admin/index/Index"));
 const Details = lazy(() => import("../views/blog/main/Details"));
 const Tag = lazy(() => import("../views/blog/main/Tag"));
+const AddArticle = lazy(() => import("@/views/admin/article/AddArticle"));
+const ArticleList = lazy(() => import("@/views/admin/article/ArticleList"));
 
 import {
   FourHundredAndThree,
@@ -20,10 +18,10 @@ const routeConfig = [
   {
     path: "/admin",
     element: <Admin />,
-    redirect: "",
+    redirect: "/index",
     children: [
       {
-        path: "",
+        path: "index",
         element: <Index />,
       },
       {
@@ -33,6 +31,14 @@ const routeConfig = [
       {
         path: "tag",
         element: <Tag />,
+      },
+      {
+        path: "addArticle",
+        element: <AddArticle />,
+      },
+      {
+        path: "articleList",
+        element: <ArticleList />,
       },
       {
         path: "403",

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, Suspense } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -27,6 +27,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { routePath } from "@/stores/atom";
 type MenuItem = Required<MenuProps>["items"][number];
 import { MenuData } from '@/config/config'
+import { ItemType } from "antd/es/menu/hooks/useItems";
 
 function getItem(
   label: React.ReactNode,
@@ -45,82 +46,80 @@ function getItem(
 }
 
 const Admin: React.FC = () => {
+  const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   const items: MenuItem[] = [
     getItem("首页", "index", <PieChartOutlined />),
-    getItem("Option 2", "2", <DesktopOutlined />),
-    getItem("Option 3", "3", <ContainerOutlined />),
+    // getItem("Option 2", "2", <DesktopOutlined />),
+    // getItem("Option 3", "3", <ContainerOutlined />),
+    getItem("文章", "sub", <MailOutlined />, [
+      getItem("文章列表", "articleList"),
+      getItem("新增文章", "addArticle"),
+    ]),
     getItem("错误页面", "sub1", <MailOutlined />, [
       getItem("403", "403"),
       getItem("404", "404"),
       getItem("500", "500"),
     ]),
-    getItem("错误日志", "8", <ContainerOutlined />),
-    getItem("页面配置", "sub2", <AppstoreOutlined />, [
-      getItem("Option 9", "9"),
-      getItem("Option 10", "10"),
-      getItem("Submenu", "sub3", null, [
-        getItem("Option 11", "11"),
-        getItem("Option 12", "12"),
-        getItem("Submenusub4", "sub4", null, [
-          getItem("Option 13", "13"),
-          getItem("Option 14", "14"),
-        ])
-      ]),
-    ]),
+    // getItem("错误日志", "8", <ContainerOutlined />),
+    // getItem("页面配置", "sub2", <AppstoreOutlined />, [
+    //   getItem("Option 9", "9"),
+    //   getItem("Option 10", "10"),
+    //   // getItem("Submenu", "sub3", null, [
+    //   //   getItem("Option 11", "11"),
+    //   //   getItem("Option 12", "12"),
+    //   //   getItem("Submenusub4", "sub4", null, [
+    //   //     getItem("Option 13", "13"),
+    //   //     getItem("Option 14", "14"),
+    //   //   ])
+    //   // ]),
+    // ]),
   ];
 
   const [path, setPath] = useRecoilState(routePath);
-  const onSelect = ({ keyPath }) => {
-    // console.log({ item, key, keyPath, selectedKeys, domEvent });
-    // console.log(selectedKeys);
-    console.log(items);
-    let itemPath: MenuItem
+  const [tag, setTag] = useState()
+  const onSelect = ({ key, keyPath }) => {
+    let itemPath: ItemType | undefined;
+    let tags = []
     const getPath = (indexKey, index) => {
       if (itemPath?.children) {
         itemPath = itemPath?.children.find(res => res.key == keyPath[keyPath.length - (index + 1)]);
       } else {
         itemPath = items.find(res => res.key == keyPath[keyPath.length - (index + 1)]);
       }
-      console.log('itemPath', itemPath);
+      tags.push(itemPath.label)
     }
     if (keyPath.length == 1) {
       itemPath = items.find(res => res.key == keyPath[keyPath.length - 1]);
+      tags.push(itemPath.label)
     } else {
       for (let index = 0; index < keyPath.length; index++) {
         const indexKey = keyPath[keyPath.length - (index + 1)];
-        console.log(indexKey)
         getPath(indexKey, index)
       }
     }
-
-    // itemPath.children && getPath()
     itemPath && setPath({ type: 'add', data: itemPath })
-
-    // navigate(key);
-    // setTag(keyPath);
-    // let data: string[] = [];
-    // console.log(data);
-    // tagData.forEach((res: string) => {
-    //   data.push(res);
-    // });
-    // data.push(key);
-    // // data.push(key)
-    // setTagData(data);
+    navigate(key);
+    setBreadItem(tags);
   };
+
   const onClick = (props: any) => {
     setSelectedKeys([props.key])
   }
-  const [breadItem, setBreadItem] = useState([]);
+
+  const [breadItem, setBreadItem] = useState(['首页']);
 
   useEffect(() => {
     if (path.type == 'click') {
       setSelectedKeys([path.data.key])
     }
   }, [path]);
+  useEffect(() => {
+    navigate('/admin/index');
+  }, []);
   const [selectedKeys, setSelectedKeys] = useState()
   return (
     <Layout className="admin">
@@ -176,7 +175,9 @@ const Admin: React.FC = () => {
               background: colorBgContainer,
             }}
           >
-            <Outlet />
+            <Suspense>
+              <Outlet />
+            </Suspense>
           </div>
         </Content>
       </Layout>
@@ -204,8 +205,6 @@ const Label: React.FC = () => {
     setActiveKey(key);
   };
   const onTabClick = (key: string) => {
-    console.log(key);
-    // setActiveKey(key);
     navigate(key);
   };
   const add = () => {
@@ -240,7 +239,7 @@ const Label: React.FC = () => {
       remove(targetKey);
     }
   };
-  
+
   return (
     <>
       <Tabs
