@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, Tabs, theme } from "antd";
 import type { MenuProps } from "antd";
-import "./admin.less";
+// import "./admin.less";
 const { Header, Sider, Content } = Layout;
 
 import HeaderEl from "./Header";
@@ -22,6 +22,7 @@ import {
   useNavigate,
   useParams,
   useActionData,
+  To,
 } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { routePath } from "@/stores/atom";
@@ -124,7 +125,8 @@ const Admin: React.FC = () => {
   return (
     <Layout className="admin">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo" />
+        {/* <div className="logo" /> */}
+        <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
         <Menu
           theme="dark"
           mode="inline"
@@ -193,7 +195,7 @@ const Label: React.FC = () => {
     key: 'index'
   }]);
 
-  const [activeKey, setActiveKey] = useState(items[0].key);
+  const [activeKey, setActiveKey] = useState('index');
   const [path, setPath] = useRecoilState(routePath);
   useEffect(() => {
     if (path.type == 'add') {
@@ -205,7 +207,7 @@ const Label: React.FC = () => {
     setActiveKey(key);
   };
   const onTabClick = (key: string) => {
-    navigate(key);
+    navigate(key || 'index');
   };
   const add = () => {
     let data = path.data;
@@ -225,21 +227,28 @@ const Label: React.FC = () => {
         targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
         ];
       setActiveKey(tabItem.key);
-      console.log(tabItem);
       setPath({ type: 'click', data: tabItem })
     }
     setItems(newPanes);
-    console.log(newPanes);
   };
   const onEdit = (targetKey: TargetKey, action: "add" | "remove") => {
-    console.log(targetKey);
     if (action === "add") {
       add();
     } else {
       remove(targetKey);
     }
   };
-
+  useEffect(() => {
+    if (items.length == 0) {
+      setItems([{
+        label: '首页',
+        key: 'index'
+      }])
+      navigate('index');
+      setActiveKey('index');
+      setPath({ type: 'click', data: { key: 'index' } })
+    }
+  }, [items])
   return (
     <>
       <Tabs
@@ -247,6 +256,7 @@ const Label: React.FC = () => {
         onChange={onChange}
         onTabClick={onTabClick}
         activeKey={activeKey}
+        className='site-tabs'
         type="editable-card"
         onEdit={onEdit}
         items={items}
