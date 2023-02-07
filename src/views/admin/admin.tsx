@@ -27,7 +27,7 @@ import {
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { routePath } from "@/stores/atom";
 type MenuItem = Required<MenuProps>["items"][number];
-import { MenuData } from '@/config/config'
+import { MenuData } from "@/config/config";
 import { ItemType } from "antd/es/menu/hooks/useItems";
 
 function getItem(
@@ -47,7 +47,7 @@ function getItem(
 }
 
 const Admin: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -81,52 +81,62 @@ const Admin: React.FC = () => {
   ];
 
   const [path, setPath] = useRecoilState(routePath);
-  const [tag, setTag] = useState()
+  const [tag, setTag] = useState();
   const onSelect = ({ key, keyPath }) => {
     let itemPath: ItemType | undefined;
-    let tags = []
+    let tags = [];
     const getPath = (indexKey, index) => {
       if (itemPath?.children) {
-        itemPath = itemPath?.children.find(res => res.key == keyPath[keyPath.length - (index + 1)]);
+        itemPath = itemPath?.children.find(
+          (res) => res.key == keyPath[keyPath.length - (index + 1)]
+        );
       } else {
-        itemPath = items.find(res => res.key == keyPath[keyPath.length - (index + 1)]);
+        itemPath = items.find(
+          (res) => res.key == keyPath[keyPath.length - (index + 1)]
+        );
       }
-      tags.push(itemPath.label)
-    }
+      tags.push(itemPath.label);
+    };
     if (keyPath.length == 1) {
-      itemPath = items.find(res => res.key == keyPath[keyPath.length - 1]);
-      tags.push(itemPath.label)
+      itemPath = items.find((res) => res.key == keyPath[keyPath.length - 1]);
+      tags.push(itemPath.label);
     } else {
       for (let index = 0; index < keyPath.length; index++) {
         const indexKey = keyPath[keyPath.length - (index + 1)];
-        getPath(indexKey, index)
+        getPath(indexKey, index);
       }
     }
-    itemPath && setPath({ type: 'add', data: itemPath })
+    itemPath && setPath({ type: "add", data: itemPath });
     navigate(key);
     setBreadItem(tags);
   };
 
   const onClick = (props: any) => {
-    setSelectedKeys([props.key])
-  }
+    setSelectedKeys([props.key]);
+  };
 
-  const [breadItem, setBreadItem] = useState(['首页']);
+  const [breadItem, setBreadItem] = useState(["首页"]);
 
   useEffect(() => {
-    if (path.type == 'click') {
-      setSelectedKeys([path.data.key])
+    if (path.type == "click") {
+      setSelectedKeys([path.data.key]);
     }
   }, [path]);
   useEffect(() => {
-    navigate('/admin/index');
+    navigate("/admin/index");
   }, []);
-  const [selectedKeys, setSelectedKeys] = useState()
+  const [selectedKeys, setSelectedKeys] = useState();
   return (
     <Layout className="admin">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         {/* <div className="logo" /> */}
-        <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
+        <div
+          style={{
+            height: 32,
+            margin: 16,
+            background: "rgba(255, 255, 255, 0.2)",
+          }}
+        />
         <Menu
           theme="dark"
           mode="inline"
@@ -159,12 +169,13 @@ const Admin: React.FC = () => {
           <HeaderEl></HeaderEl>
         </Header>
         <Content
-        // style={{
-        //   margin: "24px 16px",
-        //   padding: 24,
-        //   minHeight: 280,
-        //   background: colorBgContainer,
-        // }}
+          style={{
+            // margin: "24px 16px",
+            // padding: 24,
+            // minHeight: 280,
+            // background: colorBgContainer,
+            textAlign: "left",
+          }}
         >
           <Label />
           <div
@@ -190,16 +201,18 @@ const Admin: React.FC = () => {
 const Label: React.FC = () => {
   const navigate = useNavigate();
   type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
-  const [items, setItems] = useState([{
-    label: '首页',
-    key: 'index'
-  }]);
+  const [items, setItems] = useState([
+    {
+      label: "首页",
+      key: "index",
+    },
+  ]);
 
-  const [activeKey, setActiveKey] = useState('index');
+  const [activeKey, setActiveKey] = useState("index");
   const [path, setPath] = useRecoilState(routePath);
   useEffect(() => {
-    if (path.type == 'add') {
-      add()
+    if (path.type == "add") {
+      add();
     }
   }, [path]);
 
@@ -207,11 +220,11 @@ const Label: React.FC = () => {
     setActiveKey(key);
   };
   const onTabClick = (key: string) => {
-    navigate(key || 'index');
+    navigate(key || "index");
   };
   const add = () => {
     let data = path.data;
-    let item = items.find(item => item.key == data.key);
+    let item = items.find((item) => item.key == data.key);
     if (!item) {
       setItems([...items, { label: data.label, key: data.key }]);
     }
@@ -224,12 +237,12 @@ const Label: React.FC = () => {
     if (newPanes.length && targetKey === activeKey) {
       const tabItem =
         newPanes[
-        targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
+          targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
         ];
       setActiveKey(tabItem.key);
       console.log(tabItem);
-      navigate(tabItem.key)
-      setPath({ type: 'click', data: tabItem })
+      navigate(tabItem.key);
+      setPath({ type: "click", data: tabItem });
     }
     setItems(newPanes);
   };
@@ -242,15 +255,17 @@ const Label: React.FC = () => {
   };
   useEffect(() => {
     if (items.length == 0) {
-      setItems([{
-        label: '首页',
-        key: 'index'
-      }])
-      navigate('index');
-      setActiveKey('index');
-      setPath({ type: 'click', data: { key: 'index' } })
+      setItems([
+        {
+          label: "首页",
+          key: "index",
+        },
+      ]);
+      navigate("index");
+      setActiveKey("index");
+      setPath({ type: "click", data: { key: "index" } });
     }
-  }, [items])
+  }, [items]);
   return (
     <>
       <Tabs
@@ -258,7 +273,7 @@ const Label: React.FC = () => {
         onChange={onChange}
         onTabClick={onTabClick}
         activeKey={activeKey}
-        className='site-tabs'
+        className="site-tabs"
         type="editable-card"
         onEdit={onEdit}
         items={items}
