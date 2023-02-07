@@ -227,6 +227,8 @@ const Label: React.FC = () => {
         targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
         ];
       setActiveKey(tabItem.key);
+      console.log(tabItem);
+      navigate(tabItem.key)
       setPath({ type: 'click', data: tabItem })
     }
     setItems(newPanes);

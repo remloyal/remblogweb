@@ -10,7 +10,7 @@ import { RecoilRoot } from "recoil";
 import "./index.css";
 import "./views/views.less";
 // startSakura();
-
+console.log(window.UE);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>

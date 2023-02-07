@@ -9,6 +9,7 @@ const init = {
   menubar: true,
   // skin: "oxide-dark",
   skin: "oxide",
+  paste_data_images: true, // 允许粘贴图像
   auto_focus: true, //（自动获得焦点）
   // inline: true,
   // plugins: [
@@ -26,13 +27,13 @@ const init = {
   //   "save",
   //   'quickbars', 'link', 'table'
   // ],
-  plugins: [
-    'advlist autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table paste code help wordcount imagetools codesample'
-],
-toolbar:
-    'undo redo | formatselect | bold italic backcolor |  alignleft aligncenter alignright alignjustify |bullist numlist outdent indent | removeformat |image|codesample|code|preview|fullscreen | help',
+  // plugins: [
+  //   'advlist autolink lists link image charmap print preview anchor',
+  //   'searchreplace visualblocks code fullscreen',
+  //   'insertdatetime media table paste code help wordcount imagetools codesample'
+  // ],
+  // toolbar:
+  //   'undo redo | formatselect | bold italic backcolor |  alignleft aligncenter alignright alignjustify |bullist numlist outdent indent | removeformat |image|codesample|code|preview|fullscreen | help',
 
   quickbars_selection_toolbar: 'bold italic forecolor | link blockquote quickimage',
   codesample_languages: [
@@ -48,6 +49,8 @@ toolbar:
     { text: 'C++', value: 'cpp' },
     { text: 'Scala', value: 'scala' }
   ],
+  plugins: 'export pagebreak code emoticons image table paste lists advlist checklist link hr charmap directionality',
+  toolbar: 'export pagebreak | formatselect fontselect fontsizeselect bold italic underline strikethrough forecolor backcolor subscript superscript | alignleft aligncenter alignright alignjustify indent outdent rtl ltr | bullist numlist checklist | emoticons image table link hr charmap',
   // menu: {
   //   file: { title: '文件', items: 'newdocument' },
   //   edit: { title: '编辑', items: 'undo redo | cut copy paste pastetext | selectall' },
