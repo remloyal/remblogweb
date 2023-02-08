@@ -175,17 +175,23 @@ const Admin: React.FC = () => {
             // minHeight: 280,
             // background: colorBgContainer,
             textAlign: "left",
+            padding: "10px",
+            minHeight: 280,
+            width: "100%",
+            height: "100%",
+            overflow:'hidden'
           }}
         >
           <Label />
           <div
             style={{
-              margin: "10px",
-              padding: "10px",
-              minHeight: 280,
-              width: "97%",
-              height: "90%",
+              // margin: "10px",
+              // padding: "10px",
+              // minHeight: 280,
+              width: "100%",
+              height: "88vh",
               background: colorBgContainer,
+              overflow:'auto'
             }}
           >
             <Suspense>
@@ -237,7 +243,7 @@ const Label: React.FC = () => {
     if (newPanes.length && targetKey === activeKey) {
       const tabItem =
         newPanes[
-          targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
+        targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
         ];
       setActiveKey(tabItem.key);
       console.log(tabItem);
