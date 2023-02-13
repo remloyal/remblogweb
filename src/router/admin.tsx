@@ -1,12 +1,14 @@
 import { useRoutes } from "react-router-dom";
 import Admin from "../views/admin/admin";
-import React , { lazy } from "react";
+import React, { lazy } from "react";
 // React 组件懒加载
 const Index = lazy(() => import("@/views/admin/index/Index"));
 const Details = lazy(() => import("../views/blog/main/Details"));
 const Tag = lazy(() => import("../views/blog/main/Tag"));
 const AddArticle = lazy(() => import("@/views/admin/article/AddArticle"));
 const ArticleList = lazy(() => import("@/views/admin/article/ArticleList"));
+
+const Lable = lazy(() => import("@/views/admin/lable/Lable"));
 
 import {
   FourHundredAndThree,
@@ -51,6 +53,10 @@ const routeConfig = [
       {
         path: "500",
         element: <FiveFundred />,
+      },
+      {
+        path: "lable",
+        element: <Lable />,
       },
     ],
   },

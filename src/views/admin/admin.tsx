@@ -65,6 +65,7 @@ const Admin: React.FC = () => {
       getItem("404", "404"),
       getItem("500", "500"),
     ]),
+    getItem("标签", "lable", <PieChartOutlined />),
     // getItem("错误日志", "8", <ContainerOutlined />),
     // getItem("页面配置", "sub2", <AppstoreOutlined />, [
     //   getItem("Option 9", "9"),
