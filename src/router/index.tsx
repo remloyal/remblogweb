@@ -11,6 +11,7 @@ const Indexs = lazy(() => import("../views/blog/main/Index"));
 const Details = lazy(() => import("../views/blog/main/Details"));
 const Tag = lazy(() => import("../views/blog/main/Tag"));
 const Login = lazy(() => import("@/views/Login"));
+const Home = lazy(() => import("@/views/blog/home/home"));
 
 import RouteConfig from "./admin";
 // 快速导入工具函数
@@ -25,6 +26,10 @@ import RouteConfig from "./admin";
 const routeConfig = [
   {
     path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/index",
     element: <Index />,
     redirect: "index",
     children: [
@@ -42,6 +47,7 @@ const routeConfig = [
       },
     ],
   },
+
   {
     path: "/list",
     element: <List />,

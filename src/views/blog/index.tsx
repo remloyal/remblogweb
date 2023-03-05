@@ -1,5 +1,5 @@
 
-import Footer from "./Footer";
+import Footer from "./footer";
 import Header from "./header/header";
 import Main from "./main";
 import Float from "./Float";

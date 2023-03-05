@@ -86,14 +86,14 @@ const Admin: React.FC = () => {
   const onSelect = ({ key, keyPath }) => {
     let itemPath: ItemType | undefined;
     let tags = [];
-    const getPath = (indexKey, index) => {
+    const getPath = (indexKey: any, index: number) => {
       if (itemPath?.children) {
-        itemPath = itemPath?.children.find(
-          (res) => res.key == keyPath[keyPath.length - (index + 1)]
+        itemPath = itemPath.children.find(
+          (res: { key: any; }) => res.key == keyPath[keyPath.length - (index + 1)]
         );
       } else {
         itemPath = items.find(
-          (res) => res.key == keyPath[keyPath.length - (index + 1)]
+          (res) => res?.key == keyPath[keyPath.length - (index + 1)]
         );
       }
       tags.push(itemPath.label);
@@ -120,7 +120,7 @@ const Admin: React.FC = () => {
 
   useEffect(() => {
     if (path.type == "click") {
-      setSelectedKeys([path.data.key]);
+      setSelectedKeys([path.data.key]);      
     }
   }, [path]);
   useEffect(() => {
@@ -228,6 +228,7 @@ const Label: React.FC = () => {
   };
   const onTabClick = (key: string) => {
     navigate(key || "index");
+    setPath({ type: "click", data: { key: key} });
   };
   const add = () => {
     let data = path.data;
@@ -247,7 +248,7 @@ const Label: React.FC = () => {
         targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
         ];
       setActiveKey(tabItem.key);
-      console.log(tabItem);
+      
       navigate(tabItem.key);
       setPath({ type: "click", data: tabItem });
     }
