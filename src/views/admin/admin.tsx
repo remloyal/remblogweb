@@ -58,6 +58,7 @@ const Admin: React.FC = () => {
     // getItem("Option 3", "3", <ContainerOutlined />),
     getItem("文章", "sub", <MailOutlined />, [
       getItem("文章列表", "articleList"),
+      getItem("文章分类", "articleSort"),
       getItem("新增文章", "addArticle"),
     ]),
     getItem("错误页面", "sub1", <MailOutlined />, [
@@ -190,7 +191,7 @@ const Admin: React.FC = () => {
               // padding: "10px",
               // minHeight: 280,
               width: "100%",
-              height: "88vh",
+              height: "87vh",
               background: colorBgContainer,
               overflow:'auto'
             }}

@@ -1,5 +1,5 @@
-import  get  from "./fetch";
+import { get } from "./fetch";
 
-export const getImg =async () => {
+export const getImg = async () => {
   return await get("img");
 };

@@ -7,6 +7,7 @@ const Details = lazy(() => import("../views/blog/main/Details"));
 const Tag = lazy(() => import("../views/blog/main/Tag"));
 const AddArticle = lazy(() => import("@/views/admin/article/AddArticle"));
 const ArticleList = lazy(() => import("@/views/admin/article/ArticleList"));
+const ArticleSort = lazy(() => import("@/views/admin/article/ArticleSort"));
 
 const Lable = lazy(() => import("@/views/admin/lable/Lable"));
 
@@ -57,6 +58,10 @@ const routeConfig = [
       {
         path: "lable",
         element: <Lable />,
+      },
+      {
+        path: "articleSort",
+        element: <ArticleSort />,
       },
     ],
   },

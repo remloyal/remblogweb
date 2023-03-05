@@ -33,7 +33,7 @@ axios.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 // 响应拦截器
@@ -62,10 +62,7 @@ axios.interceptors.response.use(
         // 清除本地token和清空vuex中token对象
         // 跳转登录页面
         case 403:
-          message.error({
-            content: "登录过期，请重新登录",
-            duration: 1000,
-          });
+          message.error("登录过期，请重新登录");
           // 清除token
           localStorage.removeItem("token");
           // store.commit("loginSuccess", null);
@@ -81,28 +78,22 @@ axios.interceptors.response.use(
           break;
         // 404请求不存在
         case 404:
-          message.error({
-            content: "网络请求不存在",
-            duration: 1500,
-          });
+          message.error("网络请求不存在");
           break;
         // 其他错误，直接抛出错误提示
         default:
-          message.error({
-            content: error.response.data.message,
-            duration: 1500,
-          });
+          message.error(error.response.data.message);
       }
       return Promise.reject(error.response);
     }
-  },
+  }
 );
 /**
  * get方法，对应get请求
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-function get(url: string, params?: undefined) {
+export function get(url: string, params?: undefined) {
   return new Promise((resolve, reject) => {
     axios
       .get(baseURL + url, {
@@ -121,7 +112,7 @@ function get(url: string, params?: undefined) {
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-function post(url: string, params: any) {
+export function post(url: string, params: any) {
   return new Promise((resolve, reject) => {
     axios
       .post(baseURL + url, { params })
@@ -133,5 +124,3 @@ function post(url: string, params: any) {
       });
   });
 }
-
-export default get
