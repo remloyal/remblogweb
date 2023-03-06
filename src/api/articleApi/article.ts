@@ -17,5 +17,9 @@ export const addSort = async (param: AddSort) => {
 };
 
 export const reviseSort = async (param: AddSort) => {
-    return await post("updateSort", param);
-  };
+  return await post("updateSort", param);
+};
+
+export const deleteSort = async (id: any) => {
+  return await get("deleteSort", { id: id });
+};

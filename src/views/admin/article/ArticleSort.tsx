@@ -13,10 +13,16 @@ import {
   Tag,
 } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { getSort, addSort, reviseSort } from "@/api/articleApi/article";
+import {
+  getSort,
+  addSort,
+  reviseSort,
+  deleteSort,
+} from "@/api/articleApi/article";
 import { FormInstance } from "rc-field-form";
 
 interface DataType {
+  lable_id: string;
   id: string;
   lable_name: string;
   lable_alias: string;
@@ -47,7 +53,7 @@ const ArticleSort = () => {
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => onClick("修改分类", _)}>修改</a>
-          <a>删除</a>
+          <a onClick={() => deleteSore(_)}>删除</a>
         </Space>
       ),
     },
@@ -66,9 +72,34 @@ const ArticleSort = () => {
     }
     setOpenTitle(type);
   };
-  const closeOpen = () => {
+  const closeOpen = (data?: any) => {
     setOpen(false);
+    if (data) {
+      revise(data, "revise");
+    }
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const deleteSore = (data: React.SetStateAction<{}>) => {
+    srtDataSort(data);
+    setIsModalOpen(true);
+  };
+
+  const handleOk = async () => {
+    const res = await deleteSort(dataSort["lable_id"]);
+    if (res.code == 200) {
+      message.success("删除成功");
+      revise(dataSort,'delete');
+    } else {
+      message.error("删除失败");
+    }
+    setIsModalOpen(false);
+    srtDataSort({});
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    srtDataSort({});
+  };
+
   useEffect(() => {
     getSort().then((res) => {
       if (res.code == 200) {
@@ -76,7 +107,19 @@ const ArticleSort = () => {
       }
     });
   }, []);
-
+  //   修改数据
+  const revise = (data: any, type: string) => {
+    let todo = [].concat(dataSource) as any;
+    let index = todo.findIndex((res) => res.lable_id == data.lable_id);
+    if (index != -1) {
+      if (type == "revise") {
+        todo.splice(index, 1, data);
+      } else {
+        todo.splice(index, 1);
+      }
+    }
+    setDataSource(todo);
+  };
   return (
     <div style={{ padding: "0 10px" }}>
       <div className="lable-add">
@@ -89,20 +132,32 @@ const ArticleSort = () => {
         columns={columns}
         dataSource={dataSource}
         scroll={{ y: 520 }}
-        pagination={{
-          // current: table.pageNumber,
-          pageSize: 10,
-          defaultPageSize: 10,
-          showSizeChanger: true,
-          pageSizeOptions: ["10", "20", "30", "40"],
-          showTotal: (total, range) => `${range[0]}-${range[1]}  共${total}条`,
-          onShowSizeChange: (current, pageSize) => {
-            // table.pageSize = pageSize;
-            // table.pageNumber = 1;
-          },
-          // onChange: (pageNumber) => (table.pageNumber = pageNumber),
-        }}
+        rowKey={(record) => record.lable_id}
+        // pagination={{
+        //   // current: table.pageNumber,
+        //   pageSize: 10,
+        //   defaultPageSize: 10,
+        //   showSizeChanger: true,
+        //   pageSizeOptions: ["10", "20", "30", "40"],
+        //   showTotal: (total, range) => `${range[0]}-${range[1]}  共${total}条`,
+        //   onShowSizeChange: (current, pageSize) => {
+        //     // table.pageSize = pageSize;
+        //     // table.pageNumber = 1;
+        //   },
+        //   // onChange: (pageNumber) => (table.pageNumber = pageNumber),
+        // }}
       />
+      <Modal
+        title="删除"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="确定"
+        width={300}
+        cancelText="取消"
+      >
+        <p>是否删除该标签？</p>
+      </Modal>
       <Modal
         title={openTitle}
         centered
@@ -127,7 +182,6 @@ const ArticleSort = () => {
 
 const AddArticleSort = (props: any) => {
   const onFinish = async (values: any) => {
-    console.log("Success:", values);
     if (!values?.lable_description) {
       values.lable_description = "";
     }
@@ -147,11 +201,11 @@ const AddArticleSort = (props: any) => {
     }
   };
   const reviseFinish = async (values: any) => {
-    values['lable_id'] = props.data.lable_id
+    values["lable_id"] = props.data.lable_id;
     const res = await reviseSort(values);
     if (res.code == 200) {
-      message.success("添加成功");
-      props.closeOpen();
+      message.success("修改成功");
+      props.closeOpen(values);
     } else {
       message.error(res.message);
     }
@@ -161,8 +215,6 @@ const AddArticleSort = (props: any) => {
   };
   const fromRef = useRef<FormInstance>(null);
   useEffect(() => {
-    console.log("fromRef", fromRef);
-    console.log(props.data);
     if (JSON.stringify(props.data) !== "{}") {
       fromRef.current?.setFieldsValue(props.data);
     }
