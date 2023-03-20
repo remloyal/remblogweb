@@ -27,7 +27,7 @@ const VditorEl = () => {
       data= res.data
     })
     const vditor = new Vditor("vditor", {
-      height: '90%',
+      height: '85vh',
       counter: {
         enable: true
       },
@@ -87,7 +87,7 @@ const VditorEl = () => {
       ],
       outline:{
         enable:true,
-        position:"right"
+        position:"left"
       },
       after: () => {
         
@@ -100,7 +100,7 @@ const VditorEl = () => {
         console.log(value);
         console.log(vditor.getHTML());
         // handleExportMD(vditor.getHTML())
-      }
+      },
     });
     
   }, []);
@@ -112,7 +112,7 @@ const VditorEl = () => {
   }
   return <>
     <div id="vditor" className="vditor" />
-    <Button type="primary" onClick={onClick}>Primary Button</Button>
+    {/* <Button type="primary" onClick={onClick}>Primary Button</Button> */}
   </>;
 };
 
