@@ -2,9 +2,9 @@
 /**axios封装
  * 请求拦截、相应拦截、错误统一处理
  */
-import axios from "axios";
+import axios from 'axios';
 // import QS from "qs";
-import { message } from "antd";
+import { message } from 'antd';
 
 // 环境的切换
 // if (process.env.NODE_ENV == "development") {
@@ -14,17 +14,16 @@ import { message } from "antd";
 // } else if (process.env.NODE_ENV == "production") {
 //   axios.defaults.baseURL = "http://127.0.0.1:7001";
 // }
-const baseURL = "http://127.0.0.1:7001/";
+export const baseURL = 'http://localhost:8000';
 // 请求超时时间
 // axios.defaults.timeout = 10000;
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: baseURL,
   timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 });
 // post请求头
-instance.defaults.headers.post["Content-Type"] =
-  "application/x-www-form-urlencoded;charset=UTF-8";
+instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
 // 请求拦截器
 instance.interceptors.request.use(
@@ -66,9 +65,9 @@ instance.interceptors.response.use(
         // 清除本地token和清空vuex中token对象
         // 跳转登录页面
         case 403:
-          message.error("登录过期，请重新登录");
+          message.error('登录过期，请重新登录');
           // 清除token
-          localStorage.removeItem("token");
+          localStorage.removeItem('token');
           // store.commit("loginSuccess", null);
           // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
           // setTimeout(() => {
@@ -82,7 +81,7 @@ instance.interceptors.response.use(
           break;
         // 404请求不存在
         case 404:
-          message.error("网络请求不存在");
+          message.error('网络请求不存在');
           break;
         // 其他错误，直接抛出错误提示
         default:
@@ -119,7 +118,7 @@ export function get(url: string, params?: any) {
 export function post(url: string, params: any) {
   return new Promise((resolve, reject) => {
     instance
-      .post(url, { params })
+      .post(url, params)
       .then((res) => {
         resolve(res.data);
       })

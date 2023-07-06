@@ -3,9 +3,7 @@ import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Col, Form, Input, MenuProps, Row, SelectProps } from "antd";
 import { Select, Space } from "antd";
 import Tinymce from "./Tinymce";
-import MarkdownEditor from "./MarkdownEditor";
 import CKEditor from "./CKEditor";
-import Milkdown from "./Milkdown";
 import VditorEl from "./Vditor";
 
 const items: MenuProps["items"] = [
@@ -19,7 +17,6 @@ const AddArticle = () => {
   const [markdown, setMarkdown] = useState("");
   const markdownEl = {
     Tinymce: <Tinymce />,
-    Milkdown: <Milkdown />,
     VditorEl: <VditorEl />,
   };
   const handleChange = (value: string) => {
@@ -38,15 +35,12 @@ const AddArticle = () => {
           onChange={handleChange}
           options={[
             { value: "Tinymce", label: "Tinymce" },
-            { value: "Milkdown", label: "Milkdown" },
             { value: "Vditor", label: "Vditor" },
           ]}
         />
       </Space>
       {markdown == "Tinymce" ? (
         <Tinymce />
-      ) : markdown == "Milkdown" ? (
-        <Milkdown />
       ) : (
         <VditorEl />
       )}
