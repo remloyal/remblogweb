@@ -111,6 +111,8 @@ const Admin: React.FC = () => {
     itemPath && setPath({ type: "add", data: itemPath });
     navigate(key);
     setBreadItem(tags);
+    console.log(breadItem);
+    
   };
 
   const onClick = (props: any) => {
@@ -162,10 +164,16 @@ const Admin: React.FC = () => {
                 onClick: () => setCollapsed(!collapsed),
               }
             )}
-            <Breadcrumb className="breadcrumb">
-              {breadItem.map((res, index) => {
+            <Breadcrumb className="breadcrumb" items={[
+              ...breadItem.map((res, index) => {
+                return {
+                  title: res,
+                };
+              })
+            ]}>
+              {/* {breadItem.map((res, index) => {
                 return <Breadcrumb.Item key={index}>{res}</Breadcrumb.Item>;
-              })}
+              })} */}
             </Breadcrumb>
           </div>
           <HeaderEl></HeaderEl>

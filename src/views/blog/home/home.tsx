@@ -23,7 +23,7 @@ const Home = () => {
       <div
         className="home"
         style={{
-          backgroundImage: `url('http://127.0.0.1:7001/static/image/2.jpg')`,
+          backgroundImage: `url('http://localhost:8000/resource?url=hvRKNXEElE4Bjjsq')`,
         }}
       >
         {/* <div id="he-plugin-standard" style={{zIndex:'999'}}></div> */}

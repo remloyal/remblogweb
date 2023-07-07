@@ -22,7 +22,11 @@ function handleExportMD(contentHtml: any) {
   a.click();
 }
 
-const VditorEl = () => {
+interface vditorProps {
+  onchange: (data: string) => void
+}
+
+const VditorEl = ({ onchange }: vditorProps) => {
   const [vd, setVd] = useState<Vditor>();
   useEffect(() => {
     // import('@/assets/md/')
@@ -31,8 +35,21 @@ const VditorEl = () => {
       data = res.data
     })
     const vditor = new Vditor("vditor", {
-      height: '85vh',
+      // height: '85vh',
+      minHeight: 400,
+      lang: 'zh_CN',
+      mode:"sv",
+      theme: 'classic',
       counter: {
+        enable: true
+      },
+      toolbarConfig: {
+        pin: true
+      },
+      fullscreen: {
+        index: 999
+      },
+      resize: {
         enable: true
       },
       toolbar: [
@@ -89,20 +106,21 @@ const VditorEl = () => {
         //   click () {alert('捐赠地址：https://ld246.com/sponsor')},
         // }
       ],
-      outline: {
-        enable: true,
-        position: "left"
-      },
-      // after: () => {
-
-      //   console.log(vditor);
-      //   // console.log(data);
-      //   vditor.setValue(data);
-      //   setVd(vditor);
+      // outline: {
+      //   enable: true,
+      //   position: "left"
       // },
+      after: () => {
+
+        //   console.log(vditor);
+        //   // console.log(data);
+        // vditor.setValue(data);
+        setVd(vditor);
+      },
       input: (value) => {
-        console.log(value);
-        console.log(vditor.getHTML());
+        console.log(value.toString());
+        onchange(value);
+        // console.log(vd.getHTML());
         // handleExportMD(vditor.getHTML())
       },
       upload: {
@@ -133,25 +151,22 @@ const VditorEl = () => {
         //   return '测试';
         // },
         format(files, responseText) {
-          const {data} = JSON.parse(responseText);
+          const { data } = JSON.parse(responseText);
           console.log(data);
-          // const url = `http://localhost:8000/resource?url=${data.file_id}`;
-          const url = `http://localhost:8000${data.flie_path}`;
+          const url = `http://localhost:8000/resource?url=${data.file_id}`;
+          // const url = `http://localhost:8000${data.flie_path}`;
+          const name = `${data.name}.${data.suffix_name}`
           return JSON.stringify({
-            "msg": "",
-            "code": 200,
+            "msg": data.name,
+            "code": "0",
             "data": {
               "errFiles": [],
               "succMap": {
-                [data.name]: url,
+                [name]: url,
               }
             }
 
           })
-        },
-        success(editor, msg) {
-            console.log(editor, msg);
-
         },
       }
     });
@@ -159,14 +174,17 @@ const VditorEl = () => {
 
   }, []);
   const onClick = () => {
-    console.log(vd.getHTML());
+    // console.log(vd.getValue());
     // console.log(vd);
+    // vd.html2md(vd.getValue())
+    const data = vd.html2md(vd.getHTML());
+    console.log(data);
 
-    // vd.html2md(vd.getHTML())
+    // handleExportMD(vd.getHTML())
   }
   return <>
     <div id="vditor" className="vditor" />
-    {/* <Button type="primary" onClick={onClick}>Primary Button</Button> */}
+    <Button type="primary" onClick={onClick}>Primary Button</Button>
   </>;
 };
 

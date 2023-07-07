@@ -15,19 +15,26 @@ const items: MenuProps["items"] = [
 
 const AddArticle = () => {
   const [markdown, setMarkdown] = useState("");
-  const markdownEl = {
-    Tinymce: <Tinymce />,
-    VditorEl: <VditorEl />,
-  };
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
     setMarkdown(value);
   };
 
+  const onClick = (data:object) => {
+    console.log("data ===========>",data);
+    
+  }
+
+  const onchange = (data:string) => {
+    console.log("data1 ===========>",data);
+    
+  }
+
+
   return (
     <div style={{ padding: "10px" }}>
       {/* <VditorEl /> */}
-      <FromData />
+      <FromData onclick={onClick} />
       <Space wrap>
         <Select
           defaultValue="Vditor"
@@ -42,7 +49,7 @@ const AddArticle = () => {
       {markdown == "Tinymce" ? (
         <Tinymce />
       ) : (
-        <VditorEl />
+        <VditorEl onchange={onchange}/>
       )}
     </div>
   );
@@ -55,13 +62,19 @@ for (let i = 10; i < 36; i++) {
     label: i.toString(36) + i,
   });
 }
-const FromData = () => {
+interface ButtonProps {
+  onclick: (data: object) => void
+}
+
+const FromData = ({ onclick }: ButtonProps) => {
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    onclick(values)
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
+    onclick(errorInfo)
   };
 
   const handleChange = (value: string | string[]) => {
@@ -79,10 +92,10 @@ const FromData = () => {
         <Row gutter={[16, 24]}>
           <Col span={8}>
             <Form.Item
-              label="标题"
-              name="username"
+              label="名称"
+              name="name"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your name!" },
               ]}
             >
               <Input />
@@ -90,10 +103,21 @@ const FromData = () => {
           </Col>
           <Col span={8}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="标题"
+              name="title"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your title!" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              label="描述"
+              name="description"
+              rules={[
+                { required: true, message: "Please input your 描述!" },
               ]}
             >
               <Input />
@@ -102,9 +126,9 @@ const FromData = () => {
           <Col span={8}>
             <Form.Item
               label="标签"
-              name="username"
+              name="type"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your type!" },
               ]}
             >
               <Space direction="vertical" style={{ width: "100%" }}>
@@ -119,12 +143,12 @@ const FromData = () => {
               </Space>
             </Form.Item>
           </Col>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit" >
+              提交
+            </Button>
+          </Form.Item>
         </Row>
-        {/* <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item> */}
       </Form>
     </>
   );
