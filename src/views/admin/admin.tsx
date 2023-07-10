@@ -112,7 +112,7 @@ const Admin: React.FC = () => {
     navigate(key);
     setBreadItem(tags);
     console.log(breadItem);
-    
+
   };
 
   const onClick = (props: any) => {
@@ -123,7 +123,7 @@ const Admin: React.FC = () => {
 
   useEffect(() => {
     if (path.type == "click") {
-      setSelectedKeys([path.data.key]);      
+      setSelectedKeys([path.data.key]);
     }
   }, [path]);
   useEffect(() => {
@@ -189,25 +189,26 @@ const Admin: React.FC = () => {
             minHeight: 280,
             width: "100%",
             height: "100%",
-            overflow:'hidden'
+            overflow: 'hidden'
           }}
         >
           <Label />
-          <div
-            style={{
-              // margin: "10px",
-              // padding: "10px",
-              // minHeight: 280,
-              width: "100%",
-              height: "87vh",
-              background: colorBgContainer,
-              overflow:'auto'
-            }}
-          >
-            <Suspense>
+          <Suspense>
+            <div
+              style={{
+                // margin: "10px",
+                // padding: "10px",
+                // minHeight: 280,
+                width: "100%",
+                height: "94%",
+                background: colorBgContainer,
+                overflow: 'auto'
+              }}
+            >
+
               <Outlet />
-            </Suspense>
-          </div>
+            </div>
+          </Suspense>
         </Content>
       </Layout>
     </Layout>
@@ -237,7 +238,7 @@ const Label: React.FC = () => {
   };
   const onTabClick = (key: string) => {
     navigate(key || "index");
-    setPath({ type: "click", data: { key: key} });
+    setPath({ type: "click", data: { key: key } });
   };
   const add = () => {
     let data = path.data;
@@ -257,7 +258,7 @@ const Label: React.FC = () => {
         targetIndex === newPanes.length ? targetIndex - 1 : targetIndex
         ];
       setActiveKey(tabItem.key);
-      
+
       navigate(tabItem.key);
       setPath({ type: "click", data: tabItem });
     }

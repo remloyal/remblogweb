@@ -23,10 +23,10 @@ function handleExportMD(contentHtml: any) {
 }
 
 interface vditorProps {
-  onchange: (data: string) => void
+  onContentChange: (data: string) => void
 }
 
-const VditorEl = ({ onchange }: vditorProps) => {
+const VditorEl = React.memo(({ onContentChange }: vditorProps) => {
   const [vd, setVd] = useState<Vditor>();
   useEffect(() => {
     // import('@/assets/md/')
@@ -38,7 +38,8 @@ const VditorEl = ({ onchange }: vditorProps) => {
       // height: '85vh',
       minHeight: 400,
       lang: 'zh_CN',
-      mode:"sv",
+      mode: "sv",
+      cdn: "www.bootcdn.cn",
       theme: 'classic',
       counter: {
         enable: true
@@ -118,8 +119,8 @@ const VditorEl = ({ onchange }: vditorProps) => {
         setVd(vditor);
       },
       input: (value) => {
-        console.log(value.toString());
-        onchange(value);
+        // console.log(value.toString());
+        onContentChange(value);
         // console.log(vd.getHTML());
         // handleExportMD(vditor.getHTML())
       },
@@ -171,13 +172,15 @@ const VditorEl = ({ onchange }: vditorProps) => {
       }
     });
     setVd(vditor)
-
+    // return () => {
+    //   vditor.destroy();
+    // }
   }, []);
   const onClick = () => {
     // console.log(vd.getValue());
     // console.log(vd);
     // vd.html2md(vd.getValue())
-    const data = vd.html2md(vd.getHTML());
+    const data = vd!.html2md(vd!.getHTML());
     console.log(data);
 
     // handleExportMD(vd.getHTML())
@@ -186,6 +189,6 @@ const VditorEl = ({ onchange }: vditorProps) => {
     <div id="vditor" className="vditor" />
     <Button type="primary" onClick={onClick}>Primary Button</Button>
   </>;
-};
+});
 
 export default VditorEl;
