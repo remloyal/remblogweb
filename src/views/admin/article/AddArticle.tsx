@@ -1,17 +1,27 @@
-import React, { useMemo, useRef, useState } from 'react';
-import { DownOutlined, SmileOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Col, Form, Input, MenuProps, Modal, Row, SelectProps } from 'antd';
-import { Select, Space } from 'antd';
-import Tinymce from './Tinymce';
-import CKEditor from './CKEditor';
-import VditorEl from './Vditor';
-import TextArea from 'antd/es/input/TextArea';
-import { createArticle } from '@/api/articleApi/article';
+import React, { useMemo, useRef, useState } from "react";
+import { DownOutlined, SmileOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  MenuProps,
+  Modal,
+  Row,
+  SelectProps,
+} from "antd";
+import { Select, Space } from "antd";
+import Tinymce from "./Tinymce";
+import CKEditor from "./CKEditor";
+import VditorEl from "./Vditor";
+import TextArea from "antd/es/input/TextArea";
+import { createArticle } from "@/api/articleApi/article";
 
-const items: MenuProps['items'] = [
+const items: MenuProps["items"] = [
   {
-    key: '1',
-    label: '1',
+    key: "1",
+    label: "1",
   },
 ];
 
@@ -40,29 +50,28 @@ interface ArticleData {
   description?: string;
 }
 
-
 const AddArticle = () => {
-  const [markdown, setMarkdown] = useState('');
+  const [markdown, setMarkdown] = useState("");
   const [data, setData] = useState<ArticleData>({});
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
     setMarkdown(value);
   };
 
   const onClick = (data: object) => {
-    console.log('data ===========>', data);
+    console.log("data ===========>", data);
   };
 
   const onDatachange = async (todo: object) => {
-    console.log('data1 ===========>', data);
-    console.log('content===',content);
-    
+    console.log("data1 ===========>", data);
+    console.log("content===", content);
+
     const record = {
       ...data,
       ...todo,
-      content:JSON.stringify(content)
-    }
+      content: JSON.stringify(content),
+    };
     const res = await createArticle(record);
     console.log(res);
 
@@ -70,51 +79,70 @@ const AddArticle = () => {
     //   ...record,
     //   // description:todo.description
     // })
-    console.log('data', data);
-
+    console.log("data", data);
   };
 
   const onTitlechange = (text: string) => {
     setData({
-      title: text
-    })
+      title: text,
+    });
   };
 
   const onContentChange = (content: string) => {
     setContent(content);
-  }
+  };
 
   return (
-    <AdminBody title="新增文章" right={<div></div>}>
-      <ArticleTitle data={data} onTitlechange={onTitlechange} onDatachange={onDatachange} />
+    <AdminBody
+      title="新增文章"
+      right={
+        <>
+        <span>选择编辑器：</span>
+          <Space wrap>
+            <Select
+              defaultValue="Vditor"
+              style={{ width: 120 }}
+              onChange={handleChange}
+              options={[
+                { value: "Tinymce", label: "Tinymce" },
+                { value: "Vditor", label: "Vditor" },
+              ]}
+            />
+          </Space>
+        </>
+      }
+    >
+      <ArticleTitle
+        data={data}
+        onTitlechange={onTitlechange}
+        onDatachange={onDatachange}
+      />
       {/* <FromData onclick={onClick} /> */}
-      <Space wrap>
-        <Select
-          defaultValue="Vditor"
-          style={{ width: 120 }}
-          onChange={handleChange}
-          options={[
-            { value: 'Tinymce', label: 'Tinymce' },
-            { value: 'Vditor', label: 'Vditor' },
-          ]}
-        />
-      </Space>
-      {markdown == 'Tinymce' ? <Tinymce /> : <VditorEl onContentChange={onContentChange} />}
+
+      {markdown == "Tinymce" ? (
+        <Tinymce />
+      ) : (
+        <VditorEl onContentChange={onContentChange} />
+      )}
     </AdminBody>
   );
 };
 
-const ArticleTitle = (props: { data: ArticleData, onTitlechange: (text: string) => void, onDatachange: (data: object) => void; }) => {
+const ArticleTitle = (props: {
+  data: ArticleData;
+  onTitlechange: (text: string) => void;
+  onDatachange: (data: object) => void;
+}) => {
   const [data, setData] = useState<ArticleData>({});
 
   const onFinish = (values: { title: string }) => {
-    console.log('Success:', values);
-    props.onTitlechange(values.title)
-    setOpen(true)
+    console.log("Success:", values);
+    props.onTitlechange(values.title);
+    setOpen(true);
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   const handleChange = (value: string | string[]) => {
@@ -123,16 +151,26 @@ const ArticleTitle = (props: { data: ArticleData, onTitlechange: (text: string) 
   const [open, setOpen] = useState(false);
 
   const onClick = (data: object) => {
-    console.log('data ===========>', data);
-    props.onDatachange(data)
+    console.log("data ===========>", data);
+    props.onDatachange(data);
   };
 
   return (
     <>
-      <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
         <Row gutter={[16, 24]}>
           <Col span={16}>
-            <Form.Item label="文章标题" name="title" rules={[{ required: true, message: '请输入文章标题' }]}>
+            <Form.Item
+              label="文章标题"
+              name="title"
+              rules={[{ required: true, message: "请输入文章标题" }]}
+            >
               <Input />
             </Form.Item>
           </Col>
@@ -160,11 +198,11 @@ const ArticleTitle = (props: { data: ArticleData, onTitlechange: (text: string) 
 
 interface ButtonProps {
   onclick: (data: object) => void;
-  data: ArticleData
+  data: ArticleData;
 }
 
 const FromData = ({ onclick, data }: ButtonProps) => {
-  const options: SelectProps['options'] = [];
+  const options: SelectProps["options"] = [];
   for (let i = 10; i < 36; i++) {
     options.push({
       value: i.toString(36) + i,
@@ -173,12 +211,12 @@ const FromData = ({ onclick, data }: ButtonProps) => {
   }
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
     onclick(values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
     onclick(errorInfo);
   };
 
@@ -187,17 +225,35 @@ const FromData = ({ onclick, data }: ButtonProps) => {
   };
   return (
     <>
-      <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-        <Form.Item label="标题" >
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
+        <Form.Item label="标题">
           <div>{data.title}</div>
         </Form.Item>
-        <Form.Item label="名称" name="name" rules={[{ required: true, message: '请输入名称' }]}>
+        <Form.Item
+          label="名称"
+          name="name"
+          rules={[{ required: true, message: "请输入名称" }]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="分类" name="category" rules={[{ required: true, message: '请输入分类' }]}>
+        <Form.Item
+          label="分类"
+          name="category"
+          rules={[{ required: true, message: "请输入分类" }]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="文章描述" name="description" rules={[{ required: true, message: '请输入文章描述!' }]}>
+        <Form.Item
+          label="文章描述"
+          name="description"
+          rules={[{ required: true, message: "请输入文章描述!" }]}
+        >
           <TextArea />
         </Form.Item>
         {/* <Form.Item label="标签" name="type" rules={[{ required: true, message: 'Please input your type!' }]}>

@@ -5,7 +5,7 @@ import htmlToMd from "html-to-md";
 const init = {
   // selector: "#textarea",
   language: "zh-Hans",
-  height: "100%",
+  height: "70vh",
   menubar: true,
   // skin: "oxide-dark",
   skin: "oxide",
@@ -36,6 +36,7 @@ const init = {
   //   'undo redo | formatselect | bold italic backcolor |  alignleft aligncenter alignright alignjustify |bullist numlist outdent indent | removeformat |image|codesample|code|preview|fullscreen | help',
 
   quickbars_selection_toolbar: 'bold italic forecolor | link blockquote quickimage',
+  quickbars_insert_toolbar: 'quickimage quicktable',
   codesample_languages: [
     { text: 'HTML/XML', value: 'markup' },
     { text: 'JavaScript', value: 'javascript' },
@@ -49,8 +50,8 @@ const init = {
     { text: 'C++', value: 'cpp' },
     { text: 'Scala', value: 'scala' }
   ],
-  plugins: 'export pagebreak code emoticons image table paste lists advlist checklist link hr charmap directionality',
-  toolbar: 'export pagebreak | formatselect fontselect fontsizeselect bold italic underline strikethrough forecolor backcolor subscript superscript | alignleft aligncenter alignright alignjustify indent outdent rtl ltr | bullist numlist checklist | emoticons image table link hr charmap',
+  plugins: 'export pagebreak code emoticons image imagetools table paste lists advlist checklist link hr charmap directionality fullscreen preview codesample',
+  toolbar: 'export pagebreak | formatselect fontselect fontsizeselect bold italic underline strikethrough forecolor backcolor subscript superscript | alignleft aligncenter alignright alignjustify indent outdent rtl ltr | bullist numlist checklist | emoticons image table link hr charmap fullscreen preview codesample', 
   // menu: {
   //   file: { title: '文件', items: 'newdocument' },
   //   edit: { title: '编辑', items: 'undo redo | cut copy paste pastetext | selectall' },
@@ -68,6 +69,7 @@ const init = {
   //   "removeformat | help | preview | fullscreen | autosave | paste | charmap | save",
   // content_style:
   //   "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+  
 };
 
 const Tinymce = () => {
@@ -102,7 +104,7 @@ const Tinymce = () => {
         apiKey="zt5s69rf909gpcjyeitoxk99uinpk8gvwpx6hwyefnm0zvls"
         init={init}
       />
-      <button onClick={log}>Log editor content</button>
+      {/* <button onClick={log}>Log editor content</button> */}
     </>
   );
 };
