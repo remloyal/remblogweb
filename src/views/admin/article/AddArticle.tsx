@@ -191,6 +191,9 @@ const FromData = ({ onclick, data }: ButtonProps) => {
         <Form.Item label="标题" >
           <div>{data.title}</div>
         </Form.Item>
+        <Form.Item label="名称" name="name" rules={[{ required: true, message: '请输入名称' }]}>
+          <Input />
+        </Form.Item>
         <Form.Item label="分类" name="category" rules={[{ required: true, message: '请输入分类' }]}>
           <Input />
         </Form.Item>

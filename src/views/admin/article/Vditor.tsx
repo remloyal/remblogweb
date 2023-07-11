@@ -36,9 +36,10 @@ const VditorEl = React.memo(({ onContentChange }: vditorProps) => {
     })
     const vditor = new Vditor("vditor", {
       // height: '85vh',
-      minHeight: 400,
+      // minHeight: 400,
+      height:"70vh",
       lang: 'zh_CN',
-      mode: "sv",
+      mode: "ir",
       cdn: "www.bootcdn.cn",
       theme: 'classic',
       counter: {
@@ -50,9 +51,9 @@ const VditorEl = React.memo(({ onContentChange }: vditorProps) => {
       fullscreen: {
         index: 999
       },
-      resize: {
-        enable: true
-      },
+      // resize: {
+      //   enable: true
+      // },
       toolbar: [
         "emoji",
         "headings",
@@ -187,7 +188,7 @@ const VditorEl = React.memo(({ onContentChange }: vditorProps) => {
   }
   return <>
     <div id="vditor" className="vditor" />
-    <Button type="primary" onClick={onClick}>Primary Button</Button>
+    {/* <Button type="primary" onClick={onClick}>Primary Button</Button> */}
   </>;
 });
 
