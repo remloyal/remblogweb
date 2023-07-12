@@ -1,4 +1,4 @@
-import { get, post } from '../fetch';
+import { get, post, ResponseData } from '../fetch';
 
 // 获取所有文章分类
 export const getSort = async () => {
@@ -31,6 +31,6 @@ interface ArticleData {
   category?: string;
   description?: string;
 }
-export const createArticle = async (param: ArticleData) => {
+export const createArticle = async (param: ArticleData): Promise<ResponseData> => {
   return await post('createArticle', param);
 };

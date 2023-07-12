@@ -6,6 +6,8 @@ import { Button } from "antd";
 import axios, { AxiosResponse } from "axios";
 import { updateFile } from '@/api/update/update'
 import { baseURL } from '@/api/fetch';
+import { useRecoilState } from "recoil";
+import { articleContent } from "@/stores/manage";
 
 function handleExportMD(contentHtml: any) {
   // html转换为markdown
@@ -22,12 +24,10 @@ function handleExportMD(contentHtml: any) {
   a.click();
 }
 
-interface vditorProps {
-  onContentChange: (data: string) => void
-}
-
-const VditorEl = React.memo(({ onContentChange }: vditorProps) => {
+const VditorEl = React.memo(() => {
   const [vd, setVd] = useState<Vditor>();
+  const [content, setContent] = useRecoilState(articleContent);
+
   useEffect(() => {
     // import('@/assets/md/')
     let data: AxiosResponse<any, any> | null = null
@@ -37,10 +37,10 @@ const VditorEl = React.memo(({ onContentChange }: vditorProps) => {
     const vditor = new Vditor("vditor", {
       // height: '85vh',
       // minHeight: 400,
-      height:"70vh",
-      lang: 'zh_CN',
+      height: "73vh",
+      // lang: 'zh_CN',
       mode: "ir",
-      cdn: "www.bootcdn.cn",
+      // cdn: "www.bootcdn.cn",
       theme: 'classic',
       counter: {
         enable: true
@@ -113,17 +113,10 @@ const VditorEl = React.memo(({ onContentChange }: vditorProps) => {
       //   position: "left"
       // },
       after: () => {
-
-        //   console.log(vditor);
-        //   // console.log(data);
-        // vditor.setValue(data);
         setVd(vditor);
       },
       input: (value) => {
-        // console.log(value.toString());
-        onContentChange(value);
-        // console.log(vd.getHTML());
-        // handleExportMD(vditor.getHTML())
+        setContent(value);
       },
       upload: {
         url: baseURL + '/upload', // 上传url
@@ -172,10 +165,6 @@ const VditorEl = React.memo(({ onContentChange }: vditorProps) => {
         },
       }
     });
-    setVd(vditor)
-    // return () => {
-    //   vditor.destroy();
-    // }
   }, []);
   const onClick = () => {
     // console.log(vd.getValue());

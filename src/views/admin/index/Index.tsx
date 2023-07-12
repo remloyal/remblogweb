@@ -16,7 +16,7 @@ const Index = () => {
   useEffect(()=>{
     (async function anyNameFunction() {
       await getMd();
-      Vdito.preview(inputEl.current,data)
+      // Vdito.preview(inputEl.current,data)
     })();
   },[])
   return <> <div id="VditorPreview" ref={inputEl} className="VditorPreview"> This is Index page</div></>

@@ -2,7 +2,7 @@
 /**axios封装
  * 请求拦截、相应拦截、错误统一处理
  */
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 // import QS from "qs";
 import { message } from 'antd';
 
@@ -91,18 +91,29 @@ instance.interceptors.response.use(
     }
   }
 );
+
+export interface ResponseData {
+  code: number;
+  msg: string;
+  data: object | any[] | null;
+}
+
+interface Response extends AxiosResponse {
+  data: ResponseData;
+}
+
 /**
  * get方法，对应get请求
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-export function get(url: string, params?: any) {
+export function get(url: string, params?: any): Promise<ResponseData> {
   return new Promise((resolve, reject) => {
     instance
       .get(url, {
         params,
       })
-      .then((res) => {
+      .then((res: Response) => {
         resolve(res.data);
       })
       .catch((err) => {
@@ -110,16 +121,17 @@ export function get(url: string, params?: any) {
       });
   });
 }
+
 /**
  * post方法，对应post请求
  * @param {String} url [请求的url地址]
  * @param {Object} params [请求时携带的参数]
  */
-export function post(url: string, params: any) {
+export function post(url: string, params: any): Promise<ResponseData> {
   return new Promise((resolve, reject) => {
     instance
       .post(url, params)
-      .then((res) => {
+      .then((res: Response) => {
         resolve(res.data);
       })
       .catch((err) => {

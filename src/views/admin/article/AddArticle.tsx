@@ -7,6 +7,7 @@ import {
   Form,
   Input,
   MenuProps,
+  message,
   Modal,
   Row,
   SelectProps,
@@ -17,6 +18,9 @@ import CKEditor from "./CKEditor";
 import VditorEl from "./Vditor";
 import TextArea from "antd/es/input/TextArea";
 import { createArticle } from "@/api/articleApi/article";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { articleContent } from "@/stores/manage";
+import { ResponseData } from "@/api/fetch"
 
 const items: MenuProps["items"] = [
   {
@@ -53,7 +57,8 @@ interface ArticleData {
 const AddArticle = () => {
   const [markdown, setMarkdown] = useState("");
   const [data, setData] = useState<ArticleData>({});
-  const [content, setContent] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
+
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
     setMarkdown(value);
@@ -63,14 +68,15 @@ const AddArticle = () => {
     console.log("data ===========>", data);
   };
 
+  const articleContentData = useRecoilValue(articleContent);
   const onDatachange = async (todo: object) => {
     console.log("data1 ===========>", data);
-    console.log("content===", content);
+    console.log(articleContentData);
 
     const record = {
       ...data,
       ...todo,
-      content: JSON.stringify(content),
+      content: JSON.stringify(articleContentData),
     };
     const res = await createArticle(record);
     console.log(res);
@@ -80,65 +86,81 @@ const AddArticle = () => {
     //   // description:todo.description
     // })
     console.log("data", data);
+    if (res.code == 200) {
+      messageApi.open({
+        type: 'success',
+        content: '添加文章成功',
+      });
+    }
+    setOpen(false);
   };
 
   const onTitlechange = (text: string) => {
     setData({
       title: text,
     });
+    setOpen(true);
   };
 
-  const onContentChange = (content: string) => {
-    setContent(content);
-  };
-
+  const [open, setOpen] = useState(false);
   return (
-    <AdminBody
-      title="新增文章"
-      right={
-        <>
-        <span>选择编辑器：</span>
-          <Space wrap>
-            <Select
-              defaultValue="Vditor"
-              style={{ width: 120 }}
-              onChange={handleChange}
-              options={[
-                { value: "Tinymce", label: "Tinymce" },
-                { value: "Vditor", label: "Vditor" },
-              ]}
-            />
-          </Space>
-        </>
-      }
-    >
-      <ArticleTitle
-        data={data}
-        onTitlechange={onTitlechange}
-        onDatachange={onDatachange}
-      />
-      {/* <FromData onclick={onClick} /> */}
+    <>
+      <AdminBody
+        title="新增文章"
+        right={
+          <>
+            <span>编辑器：</span>
+            <Space wrap>
+              <Select
+                defaultValue="Vditor"
+                style={{ width: 120 }}
+                onChange={handleChange}
+                options={[
+                  { value: "Tinymce", label: "Tinymce" },
+                  { value: "Vditor", label: "Vditor" },
+                ]}
+              />
+            </Space>
+          </>
+        }
+      >
+        <ArticleTitle
+          data={data}
+          onTitlechange={onTitlechange}
+        />
+        {/* <FromData onclick={onClick} /> */}
 
-      {markdown == "Tinymce" ? (
-        <Tinymce />
-      ) : (
-        <VditorEl onContentChange={onContentChange} />
-      )}
-    </AdminBody>
+        {markdown == "Tinymce" ? (
+          <Tinymce />
+        ) : (
+          <VditorEl />
+        )}
+      </AdminBody>
+      <Modal
+        title={<div>发布文章</div>}
+        centered
+        open={open}
+        onOk={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+        width={700}
+      // destroyOnClose={true}
+      >
+        <FromData onclick={onDatachange} data={data}></FromData>
+      </Modal>
+    </>
   );
 };
 
 const ArticleTitle = (props: {
   data: ArticleData;
   onTitlechange: (text: string) => void;
-  onDatachange: (data: object) => void;
 }) => {
   const [data, setData] = useState<ArticleData>({});
 
   const onFinish = (values: { title: string }) => {
     console.log("Success:", values);
     props.onTitlechange(values.title);
-    setOpen(true);
+
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -147,12 +169,6 @@ const ArticleTitle = (props: {
 
   const handleChange = (value: string | string[]) => {
     console.log(`Selected: ${value}`);
-  };
-  const [open, setOpen] = useState(false);
-
-  const onClick = (data: object) => {
-    console.log("data ===========>", data);
-    props.onDatachange(data);
   };
 
   return (
@@ -181,17 +197,7 @@ const ArticleTitle = (props: {
           </Form.Item>
         </Row>
       </Form>
-      <Modal
-        title={<div>发布文章</div>}
-        centered
-        open={open}
-        onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
-        width={700}
-        destroyOnClose={true}
-      >
-        <FromData onclick={onClick} data={props.data}></FromData>
-      </Modal>
+
     </>
   );
 };
