@@ -7,9 +7,9 @@ const Details = lazy(() => import("../views/blog/main/Details"));
 const Tag = lazy(() => import("../views/blog/main/Tag"));
 const AddArticle = lazy(() => import("@/views/admin/article/AddArticle"));
 const ArticleList = lazy(() => import("@/views/admin/article/ArticleList"));
-const ArticleSort = lazy(() => import("@/views/admin/article/ArticleSort"));
+const ArticleSort = lazy(() => import("@/views/admin/article/Sort"));
 
-const Lable = lazy(() => import("@/views/admin/lable/Lable"));
+const Lable = lazy(() => import("@/views/admin/article/Lable"));
 
 import {
   FourHundredAndThree,

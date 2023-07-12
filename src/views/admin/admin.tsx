@@ -58,15 +58,16 @@ const Admin: React.FC = () => {
     // getItem("Option 3", "3", <ContainerOutlined />),
     getItem("文章", "sub", <MailOutlined />, [
       getItem("文章列表", "articleList"),
-      getItem("文章分类", "articleSort"),
       getItem("新增文章", "addArticle"),
+      getItem("分类管理", "articleSort"),
+      getItem("标签管理", "lable"),
     ]),
     getItem("错误页面", "sub1", <MailOutlined />, [
       getItem("403", "403"),
       getItem("404", "404"),
       getItem("500", "500"),
     ]),
-    getItem("标签", "lable", <PieChartOutlined />),
+    // getItem("标签", "lable", <PieChartOutlined />),
     // getItem("错误日志", "8", <ContainerOutlined />),
     // getItem("页面配置", "sub2", <AppstoreOutlined />, [
     //   getItem("Option 9", "9"),

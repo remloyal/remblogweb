@@ -1,7 +1,7 @@
 import { get, post, ResponseData } from '../fetch';
 
 // 获取所有文章分类
-export const getSort = async () => {
+export const getSort = async (): Promise<ResponseData> => {
   return await get('allSort');
 };
 

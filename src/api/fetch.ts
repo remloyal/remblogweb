@@ -92,10 +92,10 @@ instance.interceptors.response.use(
   }
 );
 
-export interface ResponseData {
+export interface ResponseData<T = any> {
   code: number;
   msg: string;
-  data: object | any[] | null;
+  data: object | any[] | null | T;
 }
 
 interface Response extends AxiosResponse {

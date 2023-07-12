@@ -9,8 +9,10 @@ import { startSakura } from "./components/fullScreenFlower";
 import { RecoilRoot } from "recoil";
 import "./index.css";
 import "./views/views.less";
+import { initWindow } from "./components/init/init";
 // startSakura();
 // console.log(window.UE);
+initWindow()
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
