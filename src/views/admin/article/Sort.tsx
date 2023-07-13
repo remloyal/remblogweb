@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Checkbox, Col, Form, Input, message, Modal, Row, Space, Table, Tag } from 'antd';
+import { Button, Checkbox, Col, Form, Input, message, Modal, Popconfirm, Row, Space, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { getSort, addSort, reviseSort, deleteSort } from '@/api/articleApi/article';
 import { FormInstance } from 'rc-field-form';
@@ -48,7 +48,10 @@ const ArticleSort = () => {
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => onClick('修改分类', _)}>修改</a>
-          <a onClick={() => deleteSore(_)}>删除</a>
+          <Popconfirm title="是否删除该分类?" onConfirm={() => deleteSore(_)}>
+          <a>删除</a>
+            {/* <a>Delete</a> */}
+          </Popconfirm>
         </Space>
       ),
     },

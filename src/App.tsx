@@ -3,6 +3,9 @@ import { BrowserRouter } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Router from "./router/index";
 import { windowSizes } from './stores/atom'
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
+
 function App() {
   const getWindowSize = () => ({
     height: window.innerHeight,
@@ -18,14 +21,20 @@ function App() {
     // 监听
     handleResize()
     window.addEventListener("resize", handleResize);
-    return ()=>{
+    return () => {
       window.removeEventListener("resize", handleResize);
     }
   }, []);
   return (
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <ConfigProvider locale={zhCN} theme={{
+      token: {
+        // colorPrimary: '#1677ff',
+      },
+    }}>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </ConfigProvider>
   );
 }
 
