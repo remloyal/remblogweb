@@ -26,9 +26,10 @@ function App() {
     }
   }, []);
   return (
+    
     <ConfigProvider locale={zhCN} theme={{
       token: {
-        // colorPrimary: '#1677ff',
+        colorPrimary: '#1677ff',
       },
     }}>
       <BrowserRouter>

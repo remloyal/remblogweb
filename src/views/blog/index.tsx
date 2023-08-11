@@ -12,7 +12,7 @@ const Index = () => {
     return <div className="blog">
         <ConfigProvider
             theme={{
-                algorithm: theme.compactAlgorithm,
+                algorithm: theme.darkAlgorithm ,
             }}
             >
             {/* <Snowflake /> */}

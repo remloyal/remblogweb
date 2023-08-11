@@ -16,5 +16,14 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src') // 路径别名
     }
+  },
+  build: {
+    chunkSizeWarningLimit: 8000,
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/css/[name]-[hash][extname]',
+      },
+    }
   }
 })

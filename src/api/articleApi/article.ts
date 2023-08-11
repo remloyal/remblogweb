@@ -34,3 +34,16 @@ interface ArticleData {
 export const createArticle = async (param: ArticleData): Promise<ResponseData> => {
   return await post('createArticle', param);
 };
+
+// 分页参数
+export interface PageParams {
+  page: number;
+  size: number;
+}
+
+// 分页查询标签
+export const getArticleList = async (params: PageParams): Promise<ResponseData> => {
+  console.log(params);
+
+  return await post('queryTags', params);
+};
