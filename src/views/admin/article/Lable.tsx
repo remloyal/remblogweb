@@ -11,14 +11,13 @@ interface DataType {
 }
 
 interface LableType {
+  key: string;
   tag_id: string | null;
   tag_name: string;
   tag_describe: string;
   createdAt: string;
   updatedAt: string;
 }
-
-
 
 const Lable = () => {
   const [data, setData] = useState<LableType[]>([]);
@@ -33,16 +32,32 @@ const Lable = () => {
     getData();
   }, []);
 
-  const getData = async (pageNumber?: number) => {
-    if (pageNumber) {
-      setPage({ ...page, page: pageNumber });
-    }
+  const getData = async () => {
     const res = await getArticleList(page);
     if (res.code == 200) {
       setTotal(res.data.total);
-      setData(res.data.records as LableType[]);
+      const todos: LableType[] = [];
+
+      for (let index = 0; index < res.data.records.length; index++) {
+        const todo = res.data.records[index];
+        todos.push({
+          key: (index + 1).toString(),
+          tag_id: todo.tag_id,
+          tag_name: todo.tag_name,
+          tag_describe: todo.tag_describe,
+          createdAt: todo.createdAt,
+          updatedAt: todo.updatedAt,
+        });
+      }
+      setData(todos);
     }
   };
+
+  useEffect(() => {
+    console.log(page);
+    
+    getData();
+  }, [page.size, page.page]);
 
   const columns: ColumnsType<LableType> = [
     {
@@ -56,14 +71,14 @@ const Lable = () => {
       key: "tag_describe",
     },
     {
-      title: '创建日期',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      title: "创建日期",
+      dataIndex: "createdAt",
+      key: "createdAt",
     },
     {
-      title: '修改日期',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
+      title: "修改日期",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
     },
     {
       title: "操作",
@@ -78,7 +93,7 @@ const Lable = () => {
   ];
 
   return (
-    <>
+    <div style={{ padding: '0 10px' }}>
       <div className="lable-add">
         <Button type="primary">添加</Button>
       </div>
@@ -86,32 +101,33 @@ const Lable = () => {
         bordered={true}
         columns={columns}
         dataSource={data}
+        // style={{ height: "400px" }}
+        scroll={{y:520}}
         pagination={{
           current: page.page,
           pageSize: page.size,
+          defaultCurrent: 1,
           defaultPageSize: 10,
-          showSizeChanger: true,
+          // showSizeChanger: true,
           pageSizeOptions: ["10", "20", "30", "40"],
           total: total,
           showTotal: (total, range) => `${range[0]}-${range[1]}  共${total}条`,
-          onShowSizeChange: async (current, pageSize) => {
-            // table.pageSize = pageSize;
-            // table.pageNumber = 1;
-            console.log(current, pageSize);
-
-            await setPage({
+          onShowSizeChange: (current, pageSize) => {
+            console.log("pageSize =====>", pageSize);
+            setPage({
               page: 1,
               size: pageSize,
-            })
-            await getData()
+            });
           },
-          onChange: async (pageNumber) => {
-            console.log(pageNumber);
-            await getData(pageNumber)
+          onChange: (pageNumber) => {
+            setPage({
+              size: page.size,
+              page: pageNumber,
+            });
           },
         }}
       />
-    </>
+    </div>
   );
 };
 

@@ -13,6 +13,7 @@ import { initWindow } from "./components/init/init";
 // startSakura();
 // console.log(window.UE);
 initWindow()
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
@@ -20,3 +21,4 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     </RecoilRoot>
   </React.StrictMode>
 );
+
